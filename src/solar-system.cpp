@@ -30,6 +30,7 @@ int main(int argc, char **argv) {
 	Core core;
 
 	core.Setup();
+	core.Run();
 
 	return 0;
 }

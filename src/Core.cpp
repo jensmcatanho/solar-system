@@ -42,6 +42,12 @@ void Core::Setup() {
 }
 
 void Core::Run() {
+	while (!glfwWindowShouldClose(m_Window->GetPointer())) {
+
+
+		m_Window->SwapBuffers();
+		m_Window->PollEvents();
+	}
 
 	m_Window->Close();
 }

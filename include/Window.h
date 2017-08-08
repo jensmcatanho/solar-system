@@ -43,7 +43,22 @@ class Window {
 		/**
 		 *
 		 */
+		void SwapBuffers();
+
+		/**
+		*
+		*/
+		void PollEvents() const;
+
+		/**
+		 *
+		 */
 		void Close();
+
+		/**
+		 * 
+		 */
+		GLFWwindow *GetPointer() const;
 
 	private:
 		/**
@@ -65,6 +80,18 @@ class Window {
 inline void Window::Close() {
 	glfwDestroyWindow(m_Window);
 	glfwTerminate();
+}
+
+inline void Window::SwapBuffers() {
+	glfwSwapBuffers(m_Window);
+}
+
+inline void Window::PollEvents() const {
+	glfwPollEvents();
+}
+
+inline GLFWwindow *Window::GetPointer() const {
+	return m_Window;
 }
 
 #endif
