@@ -23,33 +23,38 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include "glm/glm.hpp"
-#include "glm/gtc/constants.hpp"
+#ifndef STANDARDHEADERS_H
+#define STANDARDHEADERS_H
 
-#include "StandardHeaders.h"
+/**
+ * C headers
+ */
+#include <cassert>
+#include <ctime>
+#include <cmath>
 
-int main(int argc, char **argv) {
-	// GLFW initialization
-	if (!glfwInit()) {
-		std::cout << "Failed to initialize GLFW." << std::endl;
-		return -1;
+/**
+ * STL containers
+ */
+#include <vector>
+#include <string>
+#include <deque>
+#include <queue>
 
-	}
-	std::cout << "GLFW initialized." << std::endl;
+/**
+* I/O
+*/
+#include <iostream>
+#include <fstream>
+#include <sstream>
 
-	GLFWwindow* window = glfwCreateWindow(1024, 768, "OpenGL", nullptr, nullptr);
-	glfwMakeContextCurrent(window);
-	std::cout << "Window and context created." << std::endl;
+/**
+* Others
+*/
+#include <algorithm>
+#include <chrono>
+#include <exception>
+#include <memory>
+#include <random>
 
-	// GLEW initialization
-	glewExperimental = GL_TRUE;
-	if (glewInit() != GLEW_OK) {
-		std::cout << "Failed to initialize GLEW." << std::endl;
-	}
-
-	glfwTerminate();
-
-	return 0;
-}
+#endif
