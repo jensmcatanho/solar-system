@@ -82,6 +82,7 @@
     <ClCompile Include="src\solar-system.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\Core.h" />
     <ClInclude Include="include\Prerequisites.h" />
     <ClInclude Include="include\StandardHeaders.h" />

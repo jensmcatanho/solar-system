@@ -23,43 +23,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef PREREQUISITES_H
-#define PREREQUISITES_H
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
+#include <glm/gtc/constants.hpp>
 
 /**
- * Forward declarations.
+ * Mathematical constants.
  */
-
-class Core;
-
-/**
- * Includes.
- */
-
-/**
- * STL
- */
-#include "StandardHeaders.h"
-
-/**
- * OpenGL
- */
-#include <GL/glew.h>
-
-/**
- * GLM
- */
-#include <glm/glm.hpp>
-#include <glm/gtc/random.hpp>
-
-/**
- * GLFW
- */
-#include <GLFW/glfw3.h>
-
-/**
- * Solar System
- */
-#include "Constants.h"
+const float PI = glm::pi<float>();
+const float HALF_PI = glm::half_pi<float>();
+const float TWO_PI = 2 * glm::pi<float>();
+const float INV_PI = 1 / glm::pi<float>();
 
 #endif
