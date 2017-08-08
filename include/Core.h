@@ -23,43 +23,21 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef PREREQUISITES_H
-#define PREREQUISITES_H
+#ifndef CORE_H
+#define CORE_H
 
-/**
- * Forward declarations.
- */
-class Core;
-class Window;
+#include "Prerequisites.h"
+#include "Window.h"
 
-/**
- * Includes.
- */
+class Core {
+	public:
+		Core();
+		void Setup();
+		void Run();
 
-/**
- * STL
- */
-#include "StandardHeaders.h"
+	private:
+		std::unique_ptr<Window> m_Window;
+};
 
-/**
- * OpenGL
- */
-#include <GL/glew.h>
-
-/**
- * GLM
- */
-#include <glm/glm.hpp>
-#include <glm/gtc/random.hpp>
-
-/**
- * GLFW
- */
-#include <GLFW/glfw3.h>
-
-/**
- * Solar System
- */
-#include "Constants.h"
 
 #endif

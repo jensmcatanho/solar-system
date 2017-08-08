@@ -23,43 +23,48 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef PREREQUISITES_H
-#define PREREQUISITES_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
-/**
- * Forward declarations.
- */
-class Core;
-class Window;
+#include "Prerequisites.h"
 
-/**
- * Includes.
- */
+class Window {
+	public:
+		/**
+		 * Default constructor.
+		 */
+		Window(int width, int height);
 
-/**
- * STL
- */
-#include "StandardHeaders.h"
+		/**
+		 *
+		 */
+		bool Create(std::string title);
+	
+		/**
+		 *
+		 */
+		void Close();
 
-/**
- * OpenGL
- */
-#include <GL/glew.h>
+	private:
+		/**
+		 * Pointer to the GLFWwindow type.
+		 */
+		GLFWwindow *m_Window;
 
-/**
- * GLM
- */
-#include <glm/glm.hpp>
-#include <glm/gtc/random.hpp>
+		/**
+		 * Window's width.
+		 */
+		int m_Width;
 
-/**
- * GLFW
- */
-#include <GLFW/glfw3.h>
+		/**
+		 * Window's height.
+		 */
+		int m_Height;
+};
 
-/**
- * Solar System
- */
-#include "Constants.h"
+inline void Window::Close() {
+	glfwDestroyWindow(m_Window);
+	glfwTerminate();
+}
 
 #endif

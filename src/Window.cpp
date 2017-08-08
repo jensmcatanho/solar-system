@@ -23,43 +23,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef PREREQUISITES_H
-#define PREREQUISITES_H
+#include "Window.h"
 
-/**
- * Forward declarations.
- */
-class Core;
-class Window;
+Window::Window(int width, int height) :
+	m_Width(width),
+	m_Height(height) {
 
-/**
- * Includes.
- */
+}
 
-/**
- * STL
- */
-#include "StandardHeaders.h"
+bool Window::Create(std::string title) {
+	if (!glfwInit()) {
+		std::cout << "Failed to initialize GLFW." << std::endl;
+		return false;
+	}
+	std::cout << "GLFW initialized." << std::endl;
 
-/**
- * OpenGL
- */
-#include <GL/glew.h>
+	m_Window = glfwCreateWindow(m_Width, m_Height, title.c_str(), nullptr, nullptr);
+	glfwMakeContextCurrent(m_Window);
+	glfwSetWindowUserPointer(m_Window, this);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-/**
- * GLM
- */
-#include <glm/glm.hpp>
-#include <glm/gtc/random.hpp>
-
-/**
- * GLFW
- */
-#include <GLFW/glfw3.h>
-
-/**
- * Solar System
- */
-#include "Constants.h"
-
-#endif
+	return true;
+}

@@ -23,43 +23,25 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef PREREQUISITES_H
-#define PREREQUISITES_H
+#include "Core.h"
+#include "Window.h"
 
-/**
- * Forward declarations.
- */
-class Core;
-class Window;
+Core::Core() :
+	m_Window(new Window(1024, 768)) {
 
-/**
- * Includes.
- */
+}
 
-/**
- * STL
- */
-#include "StandardHeaders.h"
+void Core::Setup() {
+	m_Window->Create("Solar System");
 
-/**
- * OpenGL
- */
-#include <GL/glew.h>
+	// GLEW initialization
+	glewExperimental = GL_TRUE;
+	if (glewInit() != GLEW_OK) {
+		std::cout << "Failed to initialize GLEW." << std::endl;
+	}
+}
 
-/**
- * GLM
- */
-#include <glm/glm.hpp>
-#include <glm/gtc/random.hpp>
+void Core::Run() {
 
-/**
- * GLFW
- */
-#include <GLFW/glfw3.h>
-
-/**
- * Solar System
- */
-#include "Constants.h"
-
-#endif
+	m_Window->Close();
+}
