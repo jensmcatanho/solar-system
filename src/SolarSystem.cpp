@@ -23,75 +23,24 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef WINDOW_H
-#define WINDOW_H
+#include "SolarSystem.h"
+#include "Planet.h"
+#include "Star.h"
 
-#include "Prerequisites.h"
+SolarSystem::SolarSystem(unsigned int num_planets) {
+	m_Planets.reserve(num_planets);
 
-class Window {
-	public:
-		/**
-		 * Default constructor.
-		 */
-		Window(int width, int height);
-
-		/**
-		 *
-		 */
-		bool Create(std::string title);
-	
-		/**
-		 *
-		 */
-		void SwapBuffers();
-
-		/**
-		*
-		*/
-		void PollEvents() const;
-
-		/**
-		 *
-		 */
-		void Close();
-
-		/**
-		 * 
-		 */
-		GLFWwindow *GetPointer() const;
-
-		/**
-		* Window's width.
-		*/
-		int m_Width;
-
-		/**
-		* Window's height.
-		*/
-		int m_Height;
-
-	private:
-		/**
-		 * Pointer to the GLFWwindow type.
-		 */
-		GLFWwindow *m_Window;
-};
-
-inline void Window::Close() {
-	glfwDestroyWindow(m_Window);
-	glfwTerminate();
 }
 
-inline void Window::SwapBuffers() {
-	glfwSwapBuffers(m_Window);
+void SolarSystem::Start() {
+	std::shared_ptr<Star> sun(new Star(0, 0, -5));
+	sun->Start(1, 12, 24);
+	AddStar(sun);
 }
 
-inline void Window::PollEvents() const {
-	glfwPollEvents();
-}
+void SolarSystem::Draw() {
+	m_Star->Draw();
 
-inline GLFWwindow *Window::GetPointer() const {
-	return m_Window;
+	for (auto planet : m_Planets)
+		planet->Draw();
 }
-
-#endif

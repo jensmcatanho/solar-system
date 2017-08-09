@@ -30,6 +30,10 @@ SOFTWARE.
  * Forward declarations.
  */
 class Core;
+class Planet;
+class SolarSystem;
+class Sphere;
+class Star;
 class Window;
 
 /**

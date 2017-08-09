@@ -23,75 +23,37 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef SOLAR_SYSTEM_H
+#define SOLAR_SYSTEM_H
 
 #include "Prerequisites.h"
 
-class Window {
+typedef std::vector<std::shared_ptr<Planet>> PlanetList;
+
+class SolarSystem {
 	public:
-		/**
-		 * Default constructor.
-		 */
-		Window(int width, int height);
+		SolarSystem(unsigned int num_planets);
 
-		/**
-		 *
-		 */
-		bool Create(std::string title);
-	
-		/**
-		 *
-		 */
-		void SwapBuffers();
+		void AddStar(std::shared_ptr<Star> star);
 
-		/**
-		*
-		*/
-		void PollEvents() const;
+		void AddPlanet(std::shared_ptr<Planet> planet);
 
-		/**
-		 *
-		 */
-		void Close();
+		void Start();
 
-		/**
-		 * 
-		 */
-		GLFWwindow *GetPointer() const;
-
-		/**
-		* Window's width.
-		*/
-		int m_Width;
-
-		/**
-		* Window's height.
-		*/
-		int m_Height;
+		void Draw();
 
 	private:
-		/**
-		 * Pointer to the GLFWwindow type.
-		 */
-		GLFWwindow *m_Window;
+		std::shared_ptr<Star> m_Star;
+
+		PlanetList m_Planets;
 };
 
-inline void Window::Close() {
-	glfwDestroyWindow(m_Window);
-	glfwTerminate();
+inline void SolarSystem::AddStar(std::shared_ptr<Star> star) {
+	m_Star = star;
 }
 
-inline void Window::SwapBuffers() {
-	glfwSwapBuffers(m_Window);
-}
-
-inline void Window::PollEvents() const {
-	glfwPollEvents();
-}
-
-inline GLFWwindow *Window::GetPointer() const {
-	return m_Window;
+inline void SolarSystem::AddPlanet(std::shared_ptr<Planet> planet) {
+	m_Planets.push_back(planet);
 }
 
 #endif

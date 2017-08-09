@@ -28,6 +28,7 @@ SOFTWARE.
 
 #include "Prerequisites.h"
 #include "Window.h"
+#include "SolarSystem.h"
 
 class Core {
 	public:
@@ -37,6 +38,8 @@ class Core {
 
 	private:
 		std::unique_ptr<Window> m_Window;
+
+		std::unique_ptr<SolarSystem> m_SolarSystem;
 };
 
 

@@ -23,75 +23,29 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef SPHERE_H
+#define SPHERE_H
 
 #include "Prerequisites.h"
 
-class Window {
+class Sphere {
 	public:
-		/**
-		 * Default constructor.
-		 */
-		Window(int width, int height);
+		Sphere(GLfloat x, GLfloat y, GLfloat z);
 
-		/**
-		 *
-		 */
-		bool Create(std::string title);
-	
-		/**
-		 *
-		 */
-		void SwapBuffers();
+		void Start(float radius, unsigned int rings, unsigned int sectors);
 
-		/**
-		*
-		*/
-		void PollEvents() const;
+		void Draw();
 
-		/**
-		 *
-		 */
-		void Close();
+	protected:
+		std::vector<GLfloat> m_Vertices;
 
-		/**
-		 * 
-		 */
-		GLFWwindow *GetPointer() const;
+		std::vector<GLfloat> m_Normals;
 
-		/**
-		* Window's width.
-		*/
-		int m_Width;
+		std::vector<GLfloat> m_TexCoords;
 
-		/**
-		* Window's height.
-		*/
-		int m_Height;
+		std::vector<GLushort> m_Indices;
 
-	private:
-		/**
-		 * Pointer to the GLFWwindow type.
-		 */
-		GLFWwindow *m_Window;
+		glm::vec3 m_Position;
 };
-
-inline void Window::Close() {
-	glfwDestroyWindow(m_Window);
-	glfwTerminate();
-}
-
-inline void Window::SwapBuffers() {
-	glfwSwapBuffers(m_Window);
-}
-
-inline void Window::PollEvents() const {
-	glfwPollEvents();
-}
-
-inline GLFWwindow *Window::GetPointer() const {
-	return m_Window;
-}
 
 #endif

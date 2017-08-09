@@ -2,7 +2,7 @@
 -----------------------------------------------------------------------------
 The MIT License (MIT)
 
-Copyright (c) 2016 Jean Michel Catanho
+Copyright (c) 2017 Jean Michel Catanho
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,75 +23,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 -----------------------------------------------------------------------------
 */
-#ifndef WINDOW_H
-#define WINDOW_H
+#ifndef STAR_H
+#define STAR_H
 
 #include "Prerequisites.h"
+#include "Sphere.h"
 
-class Window {
+class Star : public Sphere {
 	public:
-		/**
-		 * Default constructor.
-		 */
-		Window(int width, int height);
-
-		/**
-		 *
-		 */
-		bool Create(std::string title);
-	
-		/**
-		 *
-		 */
-		void SwapBuffers();
-
-		/**
-		*
-		*/
-		void PollEvents() const;
-
-		/**
-		 *
-		 */
-		void Close();
-
-		/**
-		 * 
-		 */
-		GLFWwindow *GetPointer() const;
-
-		/**
-		* Window's width.
-		*/
-		int m_Width;
-
-		/**
-		* Window's height.
-		*/
-		int m_Height;
+		Star(GLfloat x, GLfloat y, GLfloat z);
 
 	private:
-		/**
-		 * Pointer to the GLFWwindow type.
-		 */
-		GLFWwindow *m_Window;
 };
-
-inline void Window::Close() {
-	glfwDestroyWindow(m_Window);
-	glfwTerminate();
-}
-
-inline void Window::SwapBuffers() {
-	glfwSwapBuffers(m_Window);
-}
-
-inline void Window::PollEvents() const {
-	glfwPollEvents();
-}
-
-inline GLFWwindow *Window::GetPointer() const {
-	return m_Window;
-}
 
 #endif
