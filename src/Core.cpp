@@ -42,30 +42,47 @@ void Core::Setup() {
 		std::cout << "Failed to initialize GLEW." << std::endl;
 	}
 
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
 	m_SolarSystem->Start();
+	m_SolarSystem->Load();
 }
 
 void Core::Run() {
 	while (!glfwWindowShouldClose(m_Window->GetPointer())) {
-		float aspect_ratio = (float)m_Window->m_Width / (float)m_Window->m_Height;
 		glViewport(0, 0, m_Window->m_Width, m_Window->m_Height);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		gluPerspective(45, aspect_ratio, 1, 10);
+		glm::mat4 projection_matrix = glm::perspective(glm::radians(45.0), static_cast<double>(m_Window->m_AspectRatio), 1.0, 10.0);
+		glm::mat4 view_matrix;
 
-		glMatrixMode(GL_MODELVIEW);
-		glLoadIdentity();
+		m_SolarSystem->Draw(projection_matrix * view_matrix);
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		m_SolarSystem->Draw();
 
 		m_Window->SwapBuffers();
 		m_Window->PollEvents();
 	}
 
 	m_Window->Close();
+}
+
+std::stringstream Core::ReadFile(std::string path) {
+	std::ifstream file;
+	std::stringstream string_stream;
+
+	file.exceptions(std::ifstream::badbit);
+
+	try {
+		file.open(path);
+		string_stream << file.rdbuf();
+		file.close();
+
+	} catch (std::ifstream::failure e) {
+		std::cerr << "Error while reading the file. (Does the file exist?)" << std::endl;
+	}
+
+	return string_stream;
 }

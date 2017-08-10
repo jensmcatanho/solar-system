@@ -27,7 +27,8 @@ SOFTWARE.
 
 Window::Window(int width, int height) :
 	m_Width(width),
-	m_Height(height) {
+	m_Height(height),
+	m_AspectRatio(static_cast<float>(width / height)) {
 
 }
 

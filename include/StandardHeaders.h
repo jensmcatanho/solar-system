@@ -36,10 +36,9 @@ SOFTWARE.
 /**
  * STL containers
  */
-#include <vector>
-#include <string>
 #include <deque>
 #include <queue>
+#include <vector>
 
 /**
 * I/O
@@ -56,5 +55,6 @@ SOFTWARE.
 #include <exception>
 #include <memory>
 #include <random>
+#include <string>
 
 #endif

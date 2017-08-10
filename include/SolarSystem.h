@@ -40,7 +40,9 @@ class SolarSystem {
 
 		void Start();
 
-		void Draw();
+		void Load();
+
+		void Draw(glm::mat4 vp_matrix);
 
 	private:
 		std::shared_ptr<Star> m_Star;

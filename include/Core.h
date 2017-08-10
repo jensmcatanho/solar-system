@@ -36,6 +36,8 @@ class Core {
 		void Setup();
 		void Run();
 
+		static std::stringstream ReadFile(std::string path);
+
 	private:
 		std::unique_ptr<Window> m_Window;
 

@@ -33,14 +33,25 @@ SolarSystem::SolarSystem(unsigned int num_planets) {
 }
 
 void SolarSystem::Start() {
-	std::shared_ptr<Star> sun(new Star(0, 0, -5));
-	sun->Start(1, 12, 24);
+	std::shared_ptr<Star> sun(new Star(-2, 0, -10));
+	sun->Start(0.5, 24, 24);
 	AddStar(sun);
+
+	std::shared_ptr<Planet> mars(new Planet(0, 0, -10));
+	mars->Start(0.5, 24, 24);
+	AddPlanet(mars);
 }
 
-void SolarSystem::Draw() {
-	m_Star->Draw();
+void SolarSystem::Load() {
+	m_Star->Load();
 
 	for (auto planet : m_Planets)
-		planet->Draw();
+		planet->Load();
+}
+
+void SolarSystem::Draw(glm::mat4 vp_matrix) {
+	m_Star->Draw(vp_matrix);
+
+	for (auto planet : m_Planets)
+		planet->Draw(vp_matrix);
 }

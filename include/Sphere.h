@@ -32,9 +32,13 @@ class Sphere {
 	public:
 		Sphere(GLfloat x, GLfloat y, GLfloat z);
 
+		~Sphere();
+
 		void Start(float radius, unsigned int rings, unsigned int sectors);
 
-		void Draw();
+		void Load();
+
+		void Draw(glm::mat4 vp_matrix);
 
 	protected:
 		std::vector<GLfloat> m_Vertices;
@@ -46,6 +50,15 @@ class Sphere {
 		std::vector<GLushort> m_Indices;
 
 		glm::vec3 m_Position;
+
+	private:
+		void LoadShaders();
+
+		GLuint m_ShaderProgram;
+
+		GLuint m_VAO;
+
+		GLint m_MVPLocation;
 };
 
 #endif

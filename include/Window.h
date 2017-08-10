@@ -61,14 +61,19 @@ class Window {
 		GLFWwindow *GetPointer() const;
 
 		/**
-		* Window's width.
-		*/
+		 * Window's width.
+		 */
 		int m_Width;
 
 		/**
-		* Window's height.
-		*/
+		 * Window's height.
+		 */
 		int m_Height;
+
+		/**
+		 * Aspect Ratio.
+		 */
+		float m_AspectRatio;
 
 	private:
 		/**
