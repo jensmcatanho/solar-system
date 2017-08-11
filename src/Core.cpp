@@ -50,6 +50,10 @@ void Core::Setup() {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
+	glFrontFace(GL_CW);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+
 	m_SolarSystem->Start();
 	m_SolarSystem->Load();
 }
