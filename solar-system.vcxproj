@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\Core.cpp" />
     <ClCompile Include="src\Planet.cpp" />
     <ClCompile Include="src\solar-system.cpp" />
@@ -88,10 +89,12 @@
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Camera.h" />
     <ClInclude Include="include\Constants.h" />
     <ClInclude Include="include\Core.h" />
     <ClInclude Include="include\Planet.h" />
     <ClInclude Include="include\Prerequisites.h" />
+    <ClInclude Include="include\Singleton.h" />
     <ClInclude Include="include\SolarSystem.h" />
     <ClInclude Include="include\Sphere.h" />
     <ClInclude Include="include\StandardHeaders.h" />

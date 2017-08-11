@@ -27,10 +27,12 @@ SOFTWARE.
 #define CORE_H
 
 #include "Prerequisites.h"
-#include "Window.h"
+#include "Camera.h"
+#include "Singleton.h"
 #include "SolarSystem.h"
+#include "Window.h"
 
-class Core {
+class Core : public Singleton<Core> {
 	public:
 		Core();
 		void Setup();
@@ -38,11 +40,18 @@ class Core {
 
 		static std::stringstream ReadFile(std::string path);
 
+		static Core &GetSingleton();
+
+		static Core *GetSingletonPtr();
+
+		std::unique_ptr<Camera> m_Camera;
+
+		GLfloat m_DeltaTime;
+
 	private:
 		std::unique_ptr<Window> m_Window;
 
 		std::unique_ptr<SolarSystem> m_SolarSystem;
 };
-
 
 #endif

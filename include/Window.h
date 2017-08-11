@@ -39,6 +39,11 @@ class Window {
 		 *
 		 */
 		bool Create(std::string title);
+
+		/**
+		 *
+		 */
+		void ProcessInput();
 	
 		/**
 		 *

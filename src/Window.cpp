@@ -24,6 +24,17 @@ SOFTWARE.
 -----------------------------------------------------------------------------
 */
 #include "Window.h"
+#include "Camera.h"
+#include "Core.h"
+
+void process_input(GLFWwindow *window);
+void resize_callback(GLFWwindow *window, int width, int height);
+void mouse_callback(GLFWwindow *window, double xpos, double ypos);
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset);
+
+GLboolean firstMouse = true;
+GLfloat lastX = 1024 / 2.0f;
+GLfloat lastY = 768 / 2.0f;
 
 Window::Window(int width, int height) :
 	m_Width(width),
@@ -42,7 +53,58 @@ bool Window::Create(std::string title) {
 	m_Window = glfwCreateWindow(m_Width, m_Height, title.c_str(), nullptr, nullptr);
 	glfwMakeContextCurrent(m_Window);
 	glfwSetWindowUserPointer(m_Window, this);
+
+	glfwSetFramebufferSizeCallback(m_Window, resize_callback);
+	glfwSetCursorPosCallback(m_Window, mouse_callback);
+	glfwSetScrollCallback(m_Window, scroll_callback);
+
+	glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	return true;
+}
+
+void Window::ProcessInput() {
+	process_input(m_Window);
+}
+
+void process_input(GLFWwindow *window) {
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
+
+	GLfloat delta_time = Core::GetSingleton().m_DeltaTime;
+
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		Core::GetSingleton().m_Camera->ProcessKeyboard(FORWARD, delta_time);
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		Core::GetSingleton().m_Camera->ProcessKeyboard(BACKWARD, delta_time);
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		Core::GetSingleton().m_Camera->ProcessKeyboard(LEFT, delta_time);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		Core::GetSingleton().m_Camera->ProcessKeyboard(RIGHT, delta_time);
+}
+
+void resize_callback(GLFWwindow *window, int width, int height) {
+	glViewport(0, 0, width, height);
+}
+
+void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
+	if (firstMouse) {
+		lastX = xpos;
+		lastY = ypos;
+		firstMouse = false;
+	}
+
+	float xoffset = xpos - lastX;
+	float yoffset = lastY - ypos;
+
+	lastX = xpos;
+	lastY = ypos;
+
+	Core::GetSingleton().m_Camera->ProcessMouseMovement(xoffset, yoffset);
+}
+
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
+	Core::GetSingleton().m_Camera->ProcessMouseScroll(yoffset);
 }

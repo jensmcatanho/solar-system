@@ -24,12 +24,17 @@ SOFTWARE.
 -----------------------------------------------------------------------------
 */
 #include "Core.h"
+#include "Camera.h"
 #include "Window.h"
-#include "Sphere.h"
+
+template<> Core *Singleton<Core>::m_Instance = nullptr;
+GLfloat last_frame = 0.0f;
 
 Core::Core() :
 	m_Window(new Window(1024, 768)),
-	m_SolarSystem(new SolarSystem(1)) {
+	m_SolarSystem(new SolarSystem(1)),
+	m_Camera(new Camera(0.0f, 0.0f, -1.0f)),
+	m_DeltaTime(0.0f) {
 
 }
 
@@ -51,12 +56,18 @@ void Core::Setup() {
 
 void Core::Run() {
 	while (!glfwWindowShouldClose(m_Window->GetPointer())) {
+		GLfloat current_frame = glfwGetTime();
+		m_DeltaTime = current_frame - last_frame;
+		last_frame = current_frame;
+
+		m_Window->ProcessInput();
+
 		glViewport(0, 0, m_Window->m_Width, m_Window->m_Height);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection_matrix = glm::perspective(glm::radians(45.0), static_cast<double>(m_Window->m_AspectRatio), 1.0, 10.0);
-		glm::mat4 view_matrix;
+		glm::mat4 projection_matrix = glm::perspective(glm::radians(45.0), static_cast<double>(m_Window->m_AspectRatio), 1.0, 100.0);
+		glm::mat4 view_matrix = m_Camera->GetViewMatrix();;
 
 		m_SolarSystem->Draw(projection_matrix * view_matrix);
 
@@ -85,4 +96,12 @@ std::stringstream Core::ReadFile(std::string path) {
 	}
 
 	return string_stream;
+}
+
+Core &Core::GetSingleton() {
+	return *m_Instance;
+}
+
+Core *Core::GetSingletonPtr() {
+	return m_Instance;
 }
