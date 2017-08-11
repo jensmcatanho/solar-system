@@ -40,37 +40,37 @@ void Sphere::Start(float radius, unsigned int rings, unsigned int sectors) {
 	float R = static_cast<float>(1.0 / (rings - 1));
 	float S = static_cast<float>(1.0 / (sectors - 1));
 
-	m_Vertices.resize(rings * sectors * 3);
-	m_Normals.resize(rings * sectors * 3);
-	m_TexCoords.resize(rings * sectors * 2);
+	unsigned int size_vertices = rings * sectors * 3;
+	unsigned int size_normals = rings * sectors * 3;
+	unsigned int size_texcoords = rings * sectors * 2;
+
+	m_Data.resize(size_vertices + size_normals + size_texcoords);
 	m_Indices.resize(rings * sectors * 4);
 
-	std::vector<GLfloat>::iterator v_iterator = m_Vertices.begin();
-	std::vector<GLfloat>::iterator n_iterator = m_Normals.begin();
-	std::vector<GLfloat>::iterator t_iterator = m_TexCoords.begin();
+	std::vector<GLfloat>::iterator d_iterator = m_Data.begin();
 	std::vector<GLushort>::iterator i_iterator = m_Indices.begin();
 
-	for (int i = 0; i < rings; i++) {
-		for (int j = 0; j < sectors; j++) {
+	for (unsigned int i = 0; i < rings; i++) {
+		for (unsigned int j = 0; j < sectors; j++) {
 			float x = glm::cos(2 * PI * j * S) * glm::sin(PI * i * R);
 			float y = glm::sin(-HALF_PI + PI * i * R);
 			float z = glm::sin(2 * PI * j * S) * glm::sin(PI * i * R);
 
-			*v_iterator++ = x * radius;
-			*v_iterator++ = y * radius;
-			*v_iterator++ = z * radius;
+			*d_iterator++ = x * radius;
+			*d_iterator++ = y * radius;
+			*d_iterator++ = z * radius;
 
-			*n_iterator++ = x;
-			*n_iterator++ = y;
-			*n_iterator++ = z;
+			*d_iterator++ = x;
+			*d_iterator++ = y;
+			*d_iterator++ = z;
 
-			*t_iterator++ = j * S;
-			*t_iterator++ = i * R;
+			*d_iterator++ = j * S;
+			*d_iterator++ = i * R;
 		}
 	}
 
-	for (int i = 0; i < rings - 1; i++) {
-		for (int j = 0; j < sectors - 1; j++) {
+	for (unsigned int i = 0; i < rings - 1; i++) {
+		for (unsigned int j = 0; j < sectors - 1; j++) {
 			*i_iterator++ = i * sectors + j;
 			*i_iterator++ = i * sectors + (j + 1);
 			*i_iterator++ = (i + 1) * sectors + (j + 1);
@@ -80,28 +80,24 @@ void Sphere::Start(float radius, unsigned int rings, unsigned int sectors) {
 }
 
 void Sphere::Load() {
-	GLuint vbos[3];
+	GLuint vbo;
 	GLuint ebo;
 
 	glGenVertexArrays(1, &m_VAO);
 	glBindVertexArray(m_VAO);
 
-	glGenBuffers(3, vbos);
+	glGenBuffers(1, &vbo);
+	glBindBuffer(GL_ARRAY_BUFFER, vbo);
+	glBufferData(GL_ARRAY_BUFFER, m_Data.size() * sizeof(GLfloat), &m_Data.front(), GL_STATIC_DRAW);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbos[0]);
-	glBufferData(GL_ARRAY_BUFFER, m_Vertices.size() * sizeof(GLfloat), &m_Vertices.front(), GL_STATIC_DRAW);
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void *)0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbos[1]);
-	glBufferData(GL_ARRAY_BUFFER, m_Normals.size() * sizeof(GLfloat), &m_Normals.front(), GL_STATIC_DRAW);
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void *)(3 * sizeof(GLfloat)));
 
-	glBindBuffer(GL_ARRAY_BUFFER, vbos[2]);
-	glBufferData(GL_ARRAY_BUFFER, m_TexCoords.size() * sizeof(GLfloat), &m_TexCoords.front(), GL_STATIC_DRAW);
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, 0);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GLfloat), (void *)(6 * sizeof(GLfloat)));
 
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
@@ -110,7 +106,7 @@ void Sphere::Load() {
 	LoadShaders();
 
 	glBindVertexArray(0);
-	glDeleteBuffers(3, vbos);
+	glDeleteBuffers(1, &vbo);
 	glDeleteBuffers(1, &ebo);
 }
 

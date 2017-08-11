@@ -40,7 +40,11 @@ class Sphere {
 
 		void Draw(glm::mat4 vp_matrix);
 
-	protected:
+	private:
+		void LoadShaders();
+
+		std::vector<GLfloat> m_Data;
+
 		std::vector<GLfloat> m_Vertices;
 
 		std::vector<GLfloat> m_Normals;
@@ -50,9 +54,6 @@ class Sphere {
 		std::vector<GLushort> m_Indices;
 
 		glm::vec3 m_Position;
-
-	private:
-		void LoadShaders();
 
 		GLuint m_ShaderProgram;
 
