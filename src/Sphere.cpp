@@ -188,7 +188,6 @@ void Sphere::LoadTexture(const GLchar *texture_path) {
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
@@ -208,7 +207,6 @@ void Sphere::LoadTexture(const GLchar *texture_path) {
 	}
 
 	stbi_image_free(data);
-	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 void Sphere::Draw(glm::mat4 vp_matrix) {
@@ -223,8 +221,4 @@ void Sphere::Draw(glm::mat4 vp_matrix) {
 	glUniformMatrix4fv(m_MVPLocation, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
 
 	glDrawElements(GL_QUADS, m_Indices.size(), GL_UNSIGNED_SHORT, (void *)0);
-
-	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindVertexArray(0);
-	glUseProgram(0);
 }
