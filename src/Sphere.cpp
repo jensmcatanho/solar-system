@@ -25,6 +25,7 @@ SOFTWARE.
 */
 #include "Sphere.h"
 #include "Core.h"
+#include "stb_image/stb_image.h"
 
 Sphere::Sphere(GLfloat x, GLfloat y, GLfloat z) :
 	m_Position(x, y, z) {
@@ -33,7 +34,8 @@ Sphere::Sphere(GLfloat x, GLfloat y, GLfloat z) :
 
 Sphere::~Sphere() {
 	glDeleteProgram(m_ShaderProgram);
-	glDeleteVertexArrays(1, &m_VAO);
+	glDeleteTextures(1, &m_TextureHandler);
+	glDeleteVertexArrays(1, &m_VAOHandler);
 }
 
 void Sphere::Start(float radius, unsigned int rings, unsigned int sectors) {
@@ -79,12 +81,12 @@ void Sphere::Start(float radius, unsigned int rings, unsigned int sectors) {
 	}
 }
 
-void Sphere::Load() {
+void Sphere::Load(const GLchar *texture_path) {
 	GLuint vbo;
 	GLuint ebo;
 
-	glGenVertexArrays(1, &m_VAO);
-	glBindVertexArray(m_VAO);
+	glGenVertexArrays(1, &m_VAOHandler);
+	glBindVertexArray(m_VAOHandler);
 
 	glGenBuffers(1, &vbo);
 	glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -104,6 +106,7 @@ void Sphere::Load() {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Indices.size() * sizeof(GLushort), &m_Indices.front(), GL_STATIC_DRAW);
 
 	LoadShaders();
+	LoadTexture(texture_path);
 
 	glBindVertexArray(0);
 	glDeleteBuffers(1, &vbo);
@@ -179,9 +182,39 @@ void Sphere::LoadShaders() {
 	glDeleteShader(fragment_shader);
 }
 
+void Sphere::LoadTexture(const GLchar *texture_path) {
+	glGenTextures(1, &m_TextureHandler);
+	glBindTexture(GL_TEXTURE_2D, m_TextureHandler);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	int width;
+	int height;
+	int num_channels;
+
+	stbi_set_flip_vertically_on_load(true);
+	unsigned char *data = stbi_load(texture_path, &width, &height, &num_channels, 0);
+
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	
+	} else {
+		std::cout << "Failed to load the texture." << std::endl;
+	}
+
+	stbi_image_free(data);
+	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
 void Sphere::Draw(glm::mat4 vp_matrix) {
-	glBindVertexArray(m_VAO);
+	glBindVertexArray(m_VAOHandler);
 	glUseProgram(m_ShaderProgram);
+	glBindTexture(GL_TEXTURE_2D, m_TextureHandler);
 
 	glm::mat4 translate = glm::translate(glm::mat4(1.0), m_Position);
 	glm::mat4 scale;
@@ -191,6 +224,7 @@ void Sphere::Draw(glm::mat4 vp_matrix) {
 
 	glDrawElements(GL_QUADS, m_Indices.size(), GL_UNSIGNED_SHORT, (void *)0);
 
+	glBindTexture(GL_TEXTURE_2D, 0);
 	glBindVertexArray(0);
 	glUseProgram(0);
 }

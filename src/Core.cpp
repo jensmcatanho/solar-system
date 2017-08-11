@@ -60,7 +60,7 @@ void Core::Run() {
 
 		m_SolarSystem->Draw(projection_matrix * view_matrix);
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 		m_Window->SwapBuffers();
 		m_Window->PollEvents();

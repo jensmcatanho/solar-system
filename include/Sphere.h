@@ -36,12 +36,14 @@ class Sphere {
 
 		void Start(float radius, unsigned int rings, unsigned int sectors);
 
-		void Load();
+		void Load(const GLchar *texture_path);
 
 		void Draw(glm::mat4 vp_matrix);
 
 	private:
 		void LoadShaders();
+
+		void LoadTexture(const GLchar *texture_path);
 
 		std::vector<GLfloat> m_Data;
 
@@ -57,7 +59,11 @@ class Sphere {
 
 		GLuint m_ShaderProgram;
 
-		GLuint m_VAO;
+		GLuint m_VAOHandler;
+
+		GLuint m_TextureHandler;
+
+		unsigned char *m_TextureData;
 
 		GLint m_MVPLocation;
 };

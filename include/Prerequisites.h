@@ -64,6 +64,13 @@ class Window;
 #include <GLFW/glfw3.h>
 
 /**
+ * stb_image
+ */
+#ifndef STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+#endif
+
+/**
  * Solar System
  */
 #include "Constants.h"

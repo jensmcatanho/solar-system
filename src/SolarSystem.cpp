@@ -33,25 +33,59 @@ SolarSystem::SolarSystem(unsigned int num_planets) {
 }
 
 void SolarSystem::Start() {
-	std::shared_ptr<Star> sun(new Star(-2, 0, -10));
-	sun->Start(0.5, 24, 24);
+	std::shared_ptr<Star> sun(new Star(-3, 3, -10));
+	sun->Start(1, 24, 24);
 	AddStar(sun);
 
+	std::shared_ptr<Planet> mercury(new Planet(0, 3, -10));
+	mercury->Start(1, 24, 24);
+	AddPlanet(mercury);
+
+	std::shared_ptr<Planet> venus(new Planet(3, 3, -10));
+	venus->Start(1, 24, 24);
+	AddPlanet(venus);
+
+	std::shared_ptr<Planet> earth(new Planet(-3, 0, -10));
+	earth->Start(1, 24, 24);
+	AddPlanet(earth);
+
 	std::shared_ptr<Planet> mars(new Planet(0, 0, -10));
-	mars->Start(0.5, 24, 24);
+	mars->Start(1, 24, 24);
 	AddPlanet(mars);
+
+	std::shared_ptr<Planet> jupiter(new Planet(3, 0, -10));
+	jupiter->Start(1, 24, 24);
+	AddPlanet(jupiter);
+
+	std::shared_ptr<Planet> saturn(new Planet(-3, -3, -10));
+	saturn->Start(1, 24, 24);
+	AddPlanet(saturn);
+
+	std::shared_ptr<Planet> uranus(new Planet(0, -3, -10));
+	uranus->Start(1, 24, 24);
+	AddPlanet(uranus);
+
+	std::shared_ptr<Planet> neptune(new Planet(3, -3, -10));
+	neptune->Start(1, 24, 24);
+	AddPlanet(neptune);
 }
 
 void SolarSystem::Load() {
-	m_Star->Load();
+	m_Star->Load("resources/textures/sun.jpg");
 
-	for (auto planet : m_Planets)
-		planet->Load();
+	m_Planets[0]->Load("resources/textures/mercury.jpg");
+	m_Planets[1]->Load("resources/textures/venus.jpg");
+	m_Planets[2]->Load("resources/textures/earth.jpg");
+	m_Planets[3]->Load("resources/textures/mars.jpg");
+	m_Planets[4]->Load("resources/textures/jupiter.jpg");
+	m_Planets[5]->Load("resources/textures/saturn.jpg");
+	m_Planets[6]->Load("resources/textures/uranus.jpg");
+	m_Planets[7]->Load("resources/textures/neptune.jpg");
 }
 
 void SolarSystem::Draw(glm::mat4 vp_matrix) {
 	m_Star->Draw(vp_matrix);
-
-	for (auto planet : m_Planets)
-		planet->Draw(vp_matrix);
+	
+	for (int i = 0; i < m_Planets.size(); i++)
+		m_Planets[i]->Draw(vp_matrix);
 }
