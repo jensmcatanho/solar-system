@@ -33,18 +33,23 @@ class Window {
 		/**
 		 * Default constructor.
 		 */
-		Window(int width, int height);
+		Window(std::string title, int width, int height);
 
 		/**
 		 *
 		 */
-		bool Create(std::string title);
+		bool Create();
 
 		/**
 		 *
 		 */
 		void ProcessInput();
 	
+		/**
+		 *
+		 */
+		void DisplayFPS();
+
 		/**
 		 *
 		 */
@@ -85,6 +90,16 @@ class Window {
 		 * Pointer to the GLFWwindow type.
 		 */
 		GLFWwindow *m_Window;
+
+		/**
+		 * 
+		 */
+		std::string m_Title;
+
+		/**
+		 *
+		 */
+		GLfloat m_DeltaTime;
 };
 
 inline void Window::Close() {

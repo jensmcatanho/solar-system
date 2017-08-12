@@ -35,7 +35,9 @@ SOFTWARE.
 class Core : public Singleton<Core> {
 	public:
 		Core();
+
 		void Setup();
+		
 		void Run();
 
 		static std::stringstream ReadFile(std::string path);

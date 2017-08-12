@@ -36,21 +36,22 @@ GLboolean firstMouse = true;
 GLfloat lastX = 1024 / 2.0f;
 GLfloat lastY = 768 / 2.0f;
 
-Window::Window(int width, int height) :
+Window::Window(std::string title, int width, int height) :
+	m_Title(title),
 	m_Width(width),
 	m_Height(height),
 	m_AspectRatio(static_cast<float>(width / height)) {
 
 }
 
-bool Window::Create(std::string title) {
+bool Window::Create() {
 	if (!glfwInit()) {
 		std::cout << "Failed to initialize GLFW." << std::endl;
 		return false;
 	}
 	std::cout << "GLFW initialized." << std::endl;
 
-	m_Window = glfwCreateWindow(m_Width, m_Height, title.c_str(), nullptr, nullptr);
+	m_Window = glfwCreateWindow(m_Width, m_Height, m_Title.c_str(), nullptr, nullptr);
 	glfwMakeContextCurrent(m_Window);
 	glfwSetWindowUserPointer(m_Window, this);
 
@@ -67,6 +68,23 @@ bool Window::Create(std::string title) {
 
 void Window::ProcessInput() {
 	process_input(m_Window);
+}
+
+void Window::DisplayFPS() {
+	static GLfloat fps = 0.0f;
+	static GLfloat last_time = 0.0f;
+	GLfloat current_time = glfwGetTime();
+
+	++fps;
+
+	if (current_time - last_time > 1.0f) {
+		last_time = current_time;
+
+		std::stringstream ss;
+		ss << m_Title << " - " << fps << " FPS" << std::endl;
+		glfwSetWindowTitle(m_Window, ss.str().c_str());
+		fps = 0;
+	}
 }
 
 void process_input(GLFWwindow *window) {

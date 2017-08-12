@@ -30,7 +30,7 @@ SOFTWARE.
 template<> Core *Singleton<Core>::m_Instance = nullptr;
 
 Core::Core() :
-	m_Window(new Window(1024, 768)),
+	m_Window(new Window("Solar System", 1024, 768)),
 	m_SolarSystem(new SolarSystem(1)),
 	m_Camera(new Camera(0.0f, 0.0f, -1.0f)),
 	m_DeltaTime(0.0f) {
@@ -38,7 +38,7 @@ Core::Core() :
 }
 
 void Core::Setup() {
-	m_Window->Create("Solar System");
+	m_Window->Create();
 
 	// GLEW initialization
 	glewExperimental = GL_TRUE;
@@ -65,11 +65,8 @@ void Core::Run() {
 		m_DeltaTime = current_frame - last_frame;
 		last_frame = current_frame;
 
-		std::cout << m_DeltaTime * 60 << std::endl;
-
+		m_Window->DisplayFPS();
 		m_Window->ProcessInput();
-
-		glViewport(0, 0, m_Window->m_Width, m_Window->m_Height);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -78,8 +75,9 @@ void Core::Run() {
 
 		m_SolarSystem->Draw(projection_matrix * view_matrix);
 
-//		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
+#if 0
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+#endif
 		m_Window->SwapBuffers();
 		m_Window->PollEvents();
 	}
