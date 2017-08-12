@@ -28,7 +28,6 @@ SOFTWARE.
 #include "Window.h"
 
 template<> Core *Singleton<Core>::m_Instance = nullptr;
-GLfloat last_frame = 0.0f;
 
 Core::Core() :
 	m_Window(new Window(1024, 768)),
@@ -50,7 +49,6 @@ void Core::Setup() {
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 
-	glFrontFace(GL_CW);
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
@@ -59,10 +57,15 @@ void Core::Setup() {
 }
 
 void Core::Run() {
+	GLfloat current_frame = 0.0f;
+	GLfloat last_frame = 0.0f;
+
 	while (!glfwWindowShouldClose(m_Window->GetPointer())) {
-		GLfloat current_frame = glfwGetTime();
+		current_frame = glfwGetTime();
 		m_DeltaTime = current_frame - last_frame;
 		last_frame = current_frame;
+
+		std::cout << m_DeltaTime * 60 << std::endl;
 
 		m_Window->ProcessInput();
 

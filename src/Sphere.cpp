@@ -73,10 +73,10 @@ void Sphere::Start(float radius, unsigned int rings, unsigned int sectors) {
 
 	for (unsigned int i = 0; i < rings - 1; i++) {
 		for (unsigned int j = 0; j < sectors - 1; j++) {
-			*i_iterator++ = i * sectors + j;
-			*i_iterator++ = i * sectors + (j + 1);
-			*i_iterator++ = (i + 1) * sectors + (j + 1);
 			*i_iterator++ = (i + 1) * sectors + j;
+			*i_iterator++ = (i + 1) * sectors + (j + 1);
+			*i_iterator++ = i * sectors + (j + 1);
+			*i_iterator++ = i * sectors + j;
 		}
 	}
 }
@@ -196,6 +196,7 @@ void Sphere::LoadTexture(const GLchar *texture_path) {
 	int num_channels;
 
 	stbi_set_flip_vertically_on_load(true);
+
 	unsigned char *data = stbi_load(texture_path, &width, &height, &num_channels, 0);
 
 	if (data) {
