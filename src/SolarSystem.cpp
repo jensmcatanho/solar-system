@@ -33,39 +33,39 @@ SolarSystem::SolarSystem(unsigned int num_planets) {
 }
 
 void SolarSystem::Start() {
-	std::shared_ptr<Star> sun(new Star(SUN_DISTANCE_FROM_THE_SUN, 0, 0));
+	std::shared_ptr<Star> sun(new Star(SUN_DISTANCE_FROM_THE_SUN, 0, 0, SUN_AXIAL_TILT));
 	sun->Start(SUN_RADIUS, 36, 36);
 	AddStar(sun);
 
-	std::shared_ptr<Planet> mercury(new Planet(MERCURY_DISTANCE_FROM_THE_SUN, 0, 0));
+	std::shared_ptr<Planet> mercury(new Planet(MERCURY_DISTANCE_FROM_THE_SUN, 0, 0, MERCURY_AXIAL_TILT));
 	mercury->Start(MERCURY_RADIUS, 36, 36);
 	AddPlanet(mercury);
 
-	std::shared_ptr<Planet> venus(new Planet(VENUS_DISTANCE_FROM_THE_SUN, 0, 0));
+	std::shared_ptr<Planet> venus(new Planet(VENUS_DISTANCE_FROM_THE_SUN, 0, 0, VENUS_AXIAL_TILT));
 	venus->Start(VENUS_RADIUS, 36, 36);
 	AddPlanet(venus);
 
-	std::shared_ptr<Planet> earth(new Planet(EARTH_DISTANCE_FROM_THE_SUN, 0, 0));
+	std::shared_ptr<Planet> earth(new Planet(EARTH_DISTANCE_FROM_THE_SUN, 0, 0, EARTH_AXIAL_TILT));
 	earth->Start(EARTH_RADIUS, 36, 36);
 	AddPlanet(earth);
 
-	std::shared_ptr<Planet> mars(new Planet(MARS_DISTANCE_FROM_THE_SUN, 0, 0));
+	std::shared_ptr<Planet> mars(new Planet(MARS_DISTANCE_FROM_THE_SUN, 0, 0, MARS_AXIAL_TILT));
 	mars->Start(MARS_RADIUS, 36, 36);
 	AddPlanet(mars);
 
-	std::shared_ptr<Planet> jupiter(new Planet(JUPITER_DISTANCE_FROM_THE_SUN, 0, 0));
+	std::shared_ptr<Planet> jupiter(new Planet(JUPITER_DISTANCE_FROM_THE_SUN, 0, 0, JUPITER_AXIAL_TILT));
 	jupiter->Start(JUPITER_RADIUS, 36, 36);
 	AddPlanet(jupiter);
 
-	std::shared_ptr<Planet> saturn(new Planet(SATURN_DISTANCE_FROM_THE_SUN, 0, 0));
+	std::shared_ptr<Planet> saturn(new Planet(SATURN_DISTANCE_FROM_THE_SUN, 0, 0, SATURN_AXIAL_TILT));
 	saturn->Start(SATURN_RADIUS, 36, 36);
 	AddPlanet(saturn);
 
-	std::shared_ptr<Planet> uranus(new Planet(URANUS_DISTANCE_FROM_THE_SUN, 0, 0));
+	std::shared_ptr<Planet> uranus(new Planet(URANUS_DISTANCE_FROM_THE_SUN, 0, 0, URANUS_AXIAL_TILT));
 	uranus->Start(URANUS_RADIUS, 36, 36);
 	AddPlanet(uranus);
 
-	std::shared_ptr<Planet> neptune(new Planet(NEPTUNE_DISTANCE_FROM_THE_SUN, 0, 0));
+	std::shared_ptr<Planet> neptune(new Planet(NEPTUNE_DISTANCE_FROM_THE_SUN, 0, 0, NEPTUNE_AXIAL_TILT));
 	neptune->Start(NEPTUNE_RADIUS, 36, 36);
 	AddPlanet(neptune);
 }

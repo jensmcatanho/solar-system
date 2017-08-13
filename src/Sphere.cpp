@@ -212,17 +212,3 @@ void Sphere::LoadTexture(const GLchar *texture_path) {
 
 	stbi_image_free(data);
 }
-
-void Sphere::Draw(glm::mat4 vp_matrix) {
-	glBindVertexArray(m_VAOHandler);
-	glUseProgram(m_ShaderProgram);
-	glBindTexture(GL_TEXTURE_2D, m_TextureHandler);
-
-	glm::mat4 translate = glm::translate(glm::mat4(1.0), m_Position);
-	glm::mat4 scale;
-	glm::mat4 rotation;
-	glm::mat4 mvp_matrix = vp_matrix * translate * rotation * scale;
-	glUniformMatrix4fv(m_MVPLocation, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
-
-	glDrawElements(GL_QUADS, m_Indices.size(), GL_UNSIGNED_SHORT, (void *)0);
-}

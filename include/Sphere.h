@@ -38,17 +38,11 @@ class Sphere {
 
 		void Load(const GLchar *texture_path);
 
-		void Draw(glm::mat4 vp_matrix);
+		virtual void Draw(glm::mat4 vp_matrix) = 0;
 
 		glm::vec3 m_Position;
 
-	private:
-		void LoadShaders();
-
-		void LoadTexture(const GLchar *texture_path);
-
-		std::vector<GLfloat> m_Data;
-
+	protected:
 		std::vector<GLushort> m_Indices;
 
 		GLuint m_ShaderProgram;
@@ -60,6 +54,13 @@ class Sphere {
 		unsigned char *m_TextureData;
 
 		GLint m_MVPLocation;
+
+	private:
+		void LoadShaders();
+
+		void LoadTexture(const GLchar *texture_path);
+
+		std::vector<GLfloat> m_Data;
 };
 
 #endif

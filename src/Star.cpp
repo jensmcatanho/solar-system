@@ -25,7 +25,22 @@ SOFTWARE.
 */
 #include "Star.h"
 
-Star::Star(GLfloat x, GLfloat y, GLfloat z) :
-	Sphere(x, y, z) {
+Star::Star(GLfloat x, GLfloat y, GLfloat z, GLfloat axial_tilt) :
+	Sphere(x, y, z),
+	m_AxialTilt(axial_tilt) {
 
+}
+
+void Star::Draw(glm::mat4 vp_matrix) {
+	glBindVertexArray(m_VAOHandler);
+	glUseProgram(m_ShaderProgram);
+	glBindTexture(GL_TEXTURE_2D, m_TextureHandler);
+
+	glm::mat4 model;
+	model = glm::translate(model, m_Position);
+	model = glm::rotate(model, glm::radians(m_AxialTilt), glm::vec3(0.0, 0.0, 1.0));
+	glm::mat4 mvp_matrix = vp_matrix * model;
+	glUniformMatrix4fv(m_MVPLocation, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
+
+	glDrawElements(GL_QUADS, m_Indices.size(), GL_UNSIGNED_SHORT, (void *)0);
 }
