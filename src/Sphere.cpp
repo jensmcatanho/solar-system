@@ -66,7 +66,7 @@ void Sphere::Start(float radius, unsigned int rings, unsigned int sectors) {
 			*d_iterator++ = y;
 			*d_iterator++ = z;
 
-			*d_iterator++ = j * S;
+			*d_iterator++ = -(j * S);
 			*d_iterator++ = i * R;
 		}
 	}
