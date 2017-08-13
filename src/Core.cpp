@@ -31,8 +31,8 @@ template<> Core *Singleton<Core>::m_Instance = nullptr;
 
 Core::Core() :
 	m_Window(new Window("Solar System", 1024, 768)),
-	m_SolarSystem(new SolarSystem(1)),
-	m_Camera(new Camera(0.0f, 0.0f, -1.0f)),
+	m_SolarSystem(new SolarSystem(9)),
+	m_Camera(new Camera(0.0f, 0.0f, SUN_RADIUS / glm::tan(glm::radians(22.5f)) + SUN_RADIUS)),
 	m_DeltaTime(0.0f) {
 
 }
@@ -47,7 +47,7 @@ void Core::Setup() {
 	}
 
 	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LESS);
+	glDepthFunc(GL_LEQUAL);
 
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
@@ -70,7 +70,7 @@ void Core::Run() {
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 projection_matrix = glm::perspective(glm::radians(45.0), static_cast<double>(m_Window->m_AspectRatio), 1.0, 100.0);
+		glm::mat4 projection_matrix = glm::perspective(static_cast<double>(glm::radians(m_Camera->m_Zoom)), static_cast<double>(m_Window->m_AspectRatio), 0.0001, 10000.0);
 		glm::mat4 view_matrix = m_Camera->GetViewMatrix();;
 
 		m_SolarSystem->Draw(projection_matrix * view_matrix);

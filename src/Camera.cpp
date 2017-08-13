@@ -24,6 +24,7 @@ SOFTWARE.
 -----------------------------------------------------------------------------
 */
 #include "Camera.h"
+#include "Core.h"
 
 Camera::Camera(glm::vec3 position) :
 	m_Position(position),
@@ -50,6 +51,7 @@ Camera::Camera(GLfloat x, GLfloat y, GLfloat z) :
 }
 
 void Camera::ProcessKeyboard(Movement direction, GLfloat delta_time) {
+	ProcessSpeed();
 	GLfloat velocity = m_MovementSpeed * delta_time;
 
 	if (direction == FORWARD)
@@ -82,6 +84,18 @@ void Camera::ProcessMouseScroll(GLfloat y_offset) {
 		m_Zoom = 1.0f;
 	if (m_Zoom >= 45.0f)
 		m_Zoom = 45.0f;
+}
+
+void Camera::ProcessSpeed() {
+	GLfloat distance = glm::distance(m_Position, Core::GetSingleton().GetStar()->m_Position);
+	GLfloat nearest_distance = distance;
+
+	for (int i = 0; i < 8; i++) {
+		distance = glm::distance(m_Position, Core::GetSingleton().GetPlanet(i)->m_Position);
+		nearest_distance = nearest_distance > distance ? distance : nearest_distance;
+	}
+
+	m_MovementSpeed = nearest_distance * 0.5f;
 }
 
 void Camera::UpdateVectors() {

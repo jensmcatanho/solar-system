@@ -40,6 +40,8 @@ class Sphere {
 
 		void Draw(glm::mat4 vp_matrix);
 
+		glm::vec3 m_Position;
+
 	private:
 		void LoadShaders();
 
@@ -54,8 +56,6 @@ class Sphere {
 		std::vector<GLfloat> m_TexCoords;
 
 		std::vector<GLushort> m_Indices;
-
-		glm::vec3 m_Position;
 
 		GLuint m_ShaderProgram;
 

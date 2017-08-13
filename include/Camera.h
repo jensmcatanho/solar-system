@@ -35,11 +35,11 @@ enum Movement {
 	RIGHT
 };
 
-const float YAW = -90.0f;
-const float PITCH = 0.0f;
-const float SPEED = 2.5f;
-const float SENSITIVITY = 0.1f;
-const float ZOOM = 45.0f;
+const GLfloat YAW = -90.0f;
+const GLfloat PITCH = 0.0f;
+const GLfloat SPEED = 5.0f;
+const GLfloat SENSITIVITY = 0.1f;
+const GLfloat ZOOM = 45.0f;
 
 class Camera {
 	public:
@@ -53,7 +53,13 @@ class Camera {
 
 		void ProcessMouseScroll(GLfloat y_offset);
 
+		void ProcessSpeed();
+
 		glm::mat4 GetViewMatrix() const;
+
+		void SetPosition(glm::vec3 position);
+
+		GLfloat m_Zoom;
 
 	private:
 		void UpdateVectors();
@@ -75,12 +81,14 @@ class Camera {
 		GLfloat m_MovementSpeed;
 
 		GLfloat m_Sensitivity;
-
-		GLfloat m_Zoom;
 };
 
 inline glm::mat4 Camera::GetViewMatrix() const {
 	return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
+}
+
+inline void Camera::SetPosition(glm::vec3 position) {
+	m_Position = position;
 }
 
 #endif

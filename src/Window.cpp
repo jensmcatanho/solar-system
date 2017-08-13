@@ -93,14 +93,93 @@ void process_input(GLFWwindow *window) {
 
 	GLfloat delta_time = Core::GetSingleton().m_DeltaTime;
 
+	// W - Move forward
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 		Core::GetSingleton().m_Camera->ProcessKeyboard(FORWARD, delta_time);
+
+	// S - Move backward
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 		Core::GetSingleton().m_Camera->ProcessKeyboard(BACKWARD, delta_time);
+
+	// A - Move left
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 		Core::GetSingleton().m_Camera->ProcessKeyboard(LEFT, delta_time);
+
+	// D - Move right
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		Core::GetSingleton().m_Camera->ProcessKeyboard(RIGHT, delta_time);
+
+	// 1 - Focus Sun
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
+		glm::vec3 new_position = Core::GetSingleton().GetStar()->m_Position;
+		new_position.z += SUN_RADIUS / glm::tan(glm::radians(Core::GetSingleton().m_Camera->m_Zoom * 0.5f)) + SUN_RADIUS;
+
+		Core::GetSingleton().m_Camera->SetPosition(new_position);
+	}
+
+	// 2 - Focus Mercury
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
+		glm::vec3 new_position = Core::GetSingleton().GetPlanet(0)->m_Position;
+		new_position.z += MERCURY_RADIUS / glm::tan(glm::radians(Core::GetSingleton().m_Camera->m_Zoom * 0.5f)) + MERCURY_RADIUS;
+
+		Core::GetSingleton().m_Camera->SetPosition(new_position);
+	}
+
+	// 3 - Focus Venus
+	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
+		glm::vec3 new_position = Core::GetSingleton().GetPlanet(1)->m_Position;
+		new_position.z += VENUS_RADIUS / glm::tan(glm::radians(Core::GetSingleton().m_Camera->m_Zoom * 0.5f)) + VENUS_RADIUS;
+
+		Core::GetSingleton().m_Camera->SetPosition(new_position);
+	}
+
+	// 4 - Focus Earth
+	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS) {
+		glm::vec3 new_position = Core::GetSingleton().GetPlanet(2)->m_Position;
+		new_position.z += EARTH_RADIUS / glm::tan(glm::radians(Core::GetSingleton().m_Camera->m_Zoom * 0.5f)) + EARTH_RADIUS;
+
+		Core::GetSingleton().m_Camera->SetPosition(new_position);
+	}
+
+	// 5 - Focus Mars
+	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS) {
+		glm::vec3 new_position = Core::GetSingleton().GetPlanet(3)->m_Position;
+		new_position.z += MARS_RADIUS / glm::tan(glm::radians(Core::GetSingleton().m_Camera->m_Zoom * 0.5f)) + MARS_RADIUS;
+
+		Core::GetSingleton().m_Camera->SetPosition(new_position);
+	}
+
+	// 6 - Focus Jupiter
+	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS) {
+		glm::vec3 new_position = Core::GetSingleton().GetPlanet(4)->m_Position;
+		new_position.z += JUPITER_RADIUS / glm::tan(glm::radians(Core::GetSingleton().m_Camera->m_Zoom * 0.5f)) + JUPITER_RADIUS;
+
+		Core::GetSingleton().m_Camera->SetPosition(new_position);
+	}
+
+	// 7 - Focus Saturn
+	if (glfwGetKey(window, GLFW_KEY_7) == GLFW_PRESS) {
+		glm::vec3 new_position = Core::GetSingleton().GetPlanet(5)->m_Position;
+		new_position.z += SATURN_RADIUS / glm::tan(glm::radians(Core::GetSingleton().m_Camera->m_Zoom * 0.5f)) + SATURN_RADIUS;
+
+		Core::GetSingleton().m_Camera->SetPosition(new_position);
+	}
+
+	// 8 - Focus Uranus
+	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS) {
+		glm::vec3 new_position = Core::GetSingleton().GetPlanet(6)->m_Position;
+		new_position.z += URANUS_RADIUS / glm::tan(glm::radians(Core::GetSingleton().m_Camera->m_Zoom * 0.5f)) + URANUS_RADIUS;
+
+		Core::GetSingleton().m_Camera->SetPosition(new_position);
+	}
+
+	// 9 - Focus Neptune
+	if (glfwGetKey(window, GLFW_KEY_9) == GLFW_PRESS) {
+		glm::vec3 new_position = Core::GetSingleton().GetPlanet(7)->m_Position;
+		new_position.z += NEPTUNE_RADIUS / glm::tan(glm::radians(Core::GetSingleton().m_Camera->m_Zoom * 0.5f)) + NEPTUNE_RADIUS;
+
+		Core::GetSingleton().m_Camera->SetPosition(new_position);
+	}
 }
 
 void resize_callback(GLFWwindow *window, int width, int height) {

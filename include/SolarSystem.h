@@ -27,6 +27,8 @@ SOFTWARE.
 #define SOLAR_SYSTEM_H
 
 #include "Prerequisites.h"
+#include "Planet.h"
+#include "Star.h"
 
 typedef std::vector<std::shared_ptr<Planet>> PlanetList;
 
@@ -37,6 +39,10 @@ class SolarSystem {
 		void AddStar(std::shared_ptr<Star> star);
 
 		void AddPlanet(std::shared_ptr<Planet> planet);
+
+		std::shared_ptr<Star> GetStar() const;
+
+		std::shared_ptr<Planet> GetPlanet(unsigned int id) const;
 
 		void Start();
 
@@ -56,6 +62,14 @@ inline void SolarSystem::AddStar(std::shared_ptr<Star> star) {
 
 inline void SolarSystem::AddPlanet(std::shared_ptr<Planet> planet) {
 	m_Planets.push_back(planet);
+}
+
+inline std::shared_ptr<Star> SolarSystem::GetStar() const {
+	return m_Star;
+}
+
+inline std::shared_ptr<Planet> SolarSystem::GetPlanet(unsigned int id) const {
+	return m_Planets[id];
 }
 
 #endif

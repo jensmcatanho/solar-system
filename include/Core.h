@@ -28,8 +28,10 @@ SOFTWARE.
 
 #include "Prerequisites.h"
 #include "Camera.h"
+#include "Planet.h"
 #include "Singleton.h"
 #include "SolarSystem.h"
+#include "Star.h"
 #include "Window.h"
 
 class Core : public Singleton<Core> {
@@ -41,6 +43,10 @@ class Core : public Singleton<Core> {
 		void Run();
 
 		static std::stringstream ReadFile(std::string path);
+
+		std::shared_ptr<Star> GetStar() const;
+
+		std::shared_ptr<Planet> GetPlanet(unsigned int id) const;
 
 		static Core &GetSingleton();
 
@@ -55,5 +61,13 @@ class Core : public Singleton<Core> {
 
 		std::unique_ptr<SolarSystem> m_SolarSystem;
 };
+
+inline std::shared_ptr<Star> Core::GetStar() const {
+	return m_SolarSystem->GetStar();
+}
+
+inline std::shared_ptr<Planet> Core::GetPlanet(unsigned int id) const {
+	return m_SolarSystem->GetPlanet(id);
+}
 
 #endif

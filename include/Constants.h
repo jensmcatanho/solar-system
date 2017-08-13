@@ -31,9 +31,57 @@ SOFTWARE.
 /**
  * Mathematical constants.
  */
-const float PI = glm::pi<float>();
-const float HALF_PI = glm::half_pi<float>();
-const float TWO_PI = 2 * glm::pi<float>();
-const float INV_PI = 1 / glm::pi<float>();
+const GLdouble PI = glm::pi<float>();
+const GLdouble HALF_PI = glm::half_pi<float>();
+const GLdouble TWO_PI = 2 * glm::pi<float>();
+const GLdouble INV_PI = 1 / glm::pi<float>();
+
+/**
+ * Celestial bodies properties.
+ * 1 unit = 1000000km (distance)
+ * 1 unit = 1000km (radius)
+ * 1 unit = 1 earth day
+ *
+ * Obs. All distances from the sun consider the planet at the perihelion.
+ */
+const GLdouble DISTANCE_SCALE = 0.000001f;
+const GLdouble RADIUS_SCALE = 0.00001f;
+const GLdouble ASTRONOMICAL_UNIT = 147095000.0f * DISTANCE_SCALE;
+
+// Sun
+const GLdouble SUN_RADIUS = 695700.0f * RADIUS_SCALE;
+const GLdouble SUN_DISTANCE_FROM_THE_SUN = 0.0f * DISTANCE_SCALE;
+
+// Mercury
+const GLdouble MERCURY_RADIUS = 2440.0f * RADIUS_SCALE;
+const GLdouble MERCURY_DISTANCE_FROM_THE_SUN = 0.307499f * ASTRONOMICAL_UNIT;
+
+// Venus
+const GLdouble VENUS_RADIUS = 6052.0f * RADIUS_SCALE;
+const GLdouble VENUS_DISTANCE_FROM_THE_SUN = 0.718440f * ASTRONOMICAL_UNIT;
+
+// Earth
+const GLdouble EARTH_RADIUS = 6371.0f * RADIUS_SCALE;
+const GLdouble EARTH_DISTANCE_FROM_THE_SUN = ASTRONOMICAL_UNIT;
+
+// Mars
+const GLdouble MARS_RADIUS = 3390.0f * RADIUS_SCALE;
+const GLdouble MARS_DISTANCE_FROM_THE_SUN = 1.3814f * ASTRONOMICAL_UNIT;
+
+// Jupiter
+const GLdouble JUPITER_RADIUS = 69911.0f * RADIUS_SCALE;
+const GLdouble JUPITER_DISTANCE_FROM_THE_SUN = 4.95029f * ASTRONOMICAL_UNIT;
+
+// Saturn
+const GLdouble SATURN_RADIUS = 58232.0f * RADIUS_SCALE;
+const GLdouble SATURN_DISTANCE_FROM_THE_SUN = 9.024f * ASTRONOMICAL_UNIT;
+
+// Uranus
+const GLdouble URANUS_RADIUS = 25362.0f * RADIUS_SCALE;
+const GLdouble URANUS_DISTANCE_FROM_THE_SUN = 18.33f * ASTRONOMICAL_UNIT;
+
+// Neptune
+const GLdouble NEPTUNE_RADIUS = 24622.0f * RADIUS_SCALE;
+const GLdouble NEPTUNE_DISTANCE_FROM_THE_SUN = 29.81f * ASTRONOMICAL_UNIT;
 
 #endif
