@@ -111,6 +111,9 @@ void Sphere::Load(const GLchar *texture_path) {
 	glBindVertexArray(0);
 	glDeleteBuffers(1, &vbo);
 	glDeleteBuffers(1, &ebo);
+	
+	m_Data.clear();
+	m_Data.shrink_to_fit();
 }
 
 void Sphere::LoadShaders() {

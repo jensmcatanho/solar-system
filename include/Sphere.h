@@ -49,12 +49,6 @@ class Sphere {
 
 		std::vector<GLfloat> m_Data;
 
-		std::vector<GLfloat> m_Vertices;
-
-		std::vector<GLfloat> m_Normals;
-
-		std::vector<GLfloat> m_TexCoords;
-
 		std::vector<GLushort> m_Indices;
 
 		GLuint m_ShaderProgram;
