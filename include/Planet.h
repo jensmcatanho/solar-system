@@ -31,12 +31,14 @@ SOFTWARE.
 
 class Planet : public Sphere {
 	public:
-		Planet(GLfloat x, GLfloat y, GLfloat z, GLdouble axial_tilt);
+		Planet(GLfloat x, GLfloat y, GLfloat z, GLfloat rotation_period, GLfloat axial_tilt);
 
 		virtual void Draw(glm::mat4 vp_matrix);
 
 	private:
 		GLfloat m_AxialTilt;
+
+		GLfloat m_RotationPeriod;
 };
 
 #endif

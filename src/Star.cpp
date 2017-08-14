@@ -25,8 +25,9 @@ SOFTWARE.
 */
 #include "Star.h"
 
-Star::Star(GLfloat x, GLfloat y, GLfloat z, GLfloat axial_tilt) :
+Star::Star(GLfloat x, GLfloat y, GLfloat z, GLfloat rotation_period, GLfloat axial_tilt) :
 	Sphere(x, y, z),
+	m_RotationPeriod(rotation_period),
 	m_AxialTilt(axial_tilt) {
 
 }
@@ -39,6 +40,7 @@ void Star::Draw(glm::mat4 vp_matrix) {
 	glm::mat4 model;
 	model = glm::translate(model, m_Position);
 	model = glm::rotate(model, glm::radians(m_AxialTilt), glm::vec3(0.0, 0.0, 1.0));
+	model = glm::rotate(model, glm::radians(45.0f) * (float)glfwGetTime(), glm::vec3(0.0, 1.0, 0.0));
 	glm::mat4 mvp_matrix = vp_matrix * model;
 	glUniformMatrix4fv(m_MVPLocation, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
 
