@@ -25,8 +25,8 @@ SOFTWARE.
 */
 #include "Planet.h"
 
-Planet::Planet(GLfloat x, GLfloat y, GLfloat z, GLfloat rotation_period, GLfloat axial_tilt) :
-	Sphere(x, y, z),
+Planet::Planet(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLfloat rotation_period, GLfloat axial_tilt) :
+	Sphere(x, y, z, radius),
 	m_RotationPeriod(rotation_period),
 	m_AxialTilt(axial_tilt) {
 
@@ -41,6 +41,7 @@ void Planet::Draw(glm::mat4 vp_matrix) {
 	model = glm::translate(model, m_Position);
 	model = glm::rotate(model, glm::radians(m_AxialTilt), glm::vec3(0.0, 0.0, 1.0));
 	model = glm::rotate(model, glm::radians(45.0f) * (float)glfwGetTime(), glm::vec3(0.0, 1.0, 0.0));
+	model = glm::scale(model, glm::vec3(m_Radius, m_Radius, m_Radius));
 	glm::mat4 mvp_matrix = vp_matrix * model;
 	glUniformMatrix4fv(m_MVPLocation, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
 

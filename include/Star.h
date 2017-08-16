@@ -31,7 +31,7 @@ SOFTWARE.
 
 class Star : public Sphere {
 	public:
-		Star(GLfloat x, GLfloat y, GLfloat z, GLfloat rotation_period, GLfloat axial_tilt);
+		Star(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLfloat rotation_period, GLfloat axial_tilt);
 
 		virtual void Draw(glm::mat4 vp_matrix);
 

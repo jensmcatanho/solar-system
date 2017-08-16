@@ -27,8 +27,9 @@ SOFTWARE.
 #include "Core.h"
 #include "stb_image/stb_image.h"
 
-Sphere::Sphere(GLfloat x, GLfloat y, GLfloat z) :
-	m_Position(x, y, z) {
+Sphere::Sphere(GLfloat x, GLfloat y, GLfloat z, GLfloat radius) :
+	m_Position(x, y, z),
+	m_Radius(radius) {
 
 }
 
@@ -38,7 +39,7 @@ Sphere::~Sphere() {
 	glDeleteVertexArrays(1, &m_VAOHandler);
 }
 
-void Sphere::Start(float radius, unsigned int rings, unsigned int sectors) {
+void Sphere::Start(unsigned int rings, unsigned int sectors) {
 	float R = static_cast<float>(1.0 / (rings - 1));
 	float S = static_cast<float>(1.0 / (sectors - 1));
 
@@ -58,9 +59,9 @@ void Sphere::Start(float radius, unsigned int rings, unsigned int sectors) {
 			float y = glm::sin(-HALF_PI + PI * i * R);
 			float z = glm::sin(2 * PI * j * S) * glm::sin(PI * i * R);
 
-			*d_iterator++ = x * radius;
-			*d_iterator++ = y * radius;
-			*d_iterator++ = z * radius;
+			*d_iterator++ = x;
+			*d_iterator++ = y;
+			*d_iterator++ = z;
 
 			*d_iterator++ = x;
 			*d_iterator++ = y;

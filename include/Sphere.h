@@ -30,11 +30,11 @@ SOFTWARE.
 
 class Sphere {
 	public:
-		Sphere(GLfloat x, GLfloat y, GLfloat z);
+		Sphere(GLfloat x, GLfloat y, GLfloat z, GLfloat radius);
 
 		~Sphere();
 
-		void Start(float radius, unsigned int rings, unsigned int sectors);
+		void Start(unsigned int rings, unsigned int sectors);
 
 		void Load(const GLchar *texture_path);
 
@@ -44,6 +44,8 @@ class Sphere {
 
 	protected:
 		std::vector<GLushort> m_Indices;
+
+		GLfloat m_Radius;
 
 		GLuint m_ShaderProgram;
 

@@ -38,12 +38,13 @@ void SolarSystem::Start() {
 			SUN_DISTANCE_FROM_THE_SUN,
 			SUN_DISTANCE_FROM_THE_SUN * glm::sin(glm::radians(SUN_INCLINATION)),
 			0,
+			SUN_RADIUS,
 			SUN_ROTATION,
 			SUN_AXIAL_TILT
 		)
 	);
 
-	sun->Start(SUN_RADIUS, 36, 36);
+	sun->Start(36, 36);
 	AddStar(sun);
 
 	std::shared_ptr<Planet> mercury(
@@ -51,12 +52,13 @@ void SolarSystem::Start() {
 			MERCURY_DISTANCE_FROM_THE_SUN,
 			MERCURY_DISTANCE_FROM_THE_SUN * glm::sin(glm::radians(MERCURY_INCLINATION)),
 			0,
+			MERCURY_RADIUS,
 			MERCURY_ROTATION,
 			MERCURY_AXIAL_TILT
 		)
 	);
 
-	mercury->Start(MERCURY_RADIUS, 36, 36);
+	mercury->Start(36, 36);
 	AddPlanet(mercury);
 
 	std::shared_ptr<Planet> venus(
@@ -64,12 +66,13 @@ void SolarSystem::Start() {
 			VENUS_DISTANCE_FROM_THE_SUN,
 			VENUS_DISTANCE_FROM_THE_SUN * glm::sin(glm::radians(VENUS_INCLINATION)),
 			0,
+			VENUS_RADIUS,
 			VENUS_ROTATION,
 			VENUS_AXIAL_TILT
 		)
 	);
 
-	venus->Start(VENUS_RADIUS, 36, 36);
+	venus->Start(36, 36);
 	AddPlanet(venus);
 
 	std::shared_ptr<Planet> earth(
@@ -77,12 +80,13 @@ void SolarSystem::Start() {
 			EARTH_DISTANCE_FROM_THE_SUN,
 			EARTH_DISTANCE_FROM_THE_SUN * glm::sin(glm::radians(EARTH_INCLINATION)),
 			0,
+			EARTH_RADIUS,
 			EARTH_ROTATION,
 			EARTH_AXIAL_TILT
 		)
 	);
 	
-	earth->Start(EARTH_RADIUS, 36, 36);
+	earth->Start(36, 36);
 	AddPlanet(earth);
 
 	std::shared_ptr<Planet> mars(
@@ -90,12 +94,13 @@ void SolarSystem::Start() {
 			MARS_DISTANCE_FROM_THE_SUN,
 			MARS_DISTANCE_FROM_THE_SUN * glm::sin(glm::radians(MARS_INCLINATION)),
 			0,
+			MARS_RADIUS,
 			MARS_ROTATION,
 			MARS_AXIAL_TILT
 		)
 	);
 
-	mars->Start(MARS_RADIUS, 36, 36);
+	mars->Start(36, 36);
 	AddPlanet(mars);
 
 	std::shared_ptr<Planet> jupiter(
@@ -103,12 +108,13 @@ void SolarSystem::Start() {
 			JUPITER_DISTANCE_FROM_THE_SUN,
 			JUPITER_DISTANCE_FROM_THE_SUN * glm::sin(glm::radians(JUPITER_INCLINATION)),
 			0,
+			JUPITER_RADIUS,
 			JUPITER_ROTATION,
 			JUPITER_AXIAL_TILT
 		)
 	);
 
-	jupiter->Start(JUPITER_RADIUS, 36, 36);
+	jupiter->Start(36, 36);
 	AddPlanet(jupiter);
 
 	std::shared_ptr<Planet> saturn(
@@ -116,12 +122,13 @@ void SolarSystem::Start() {
 			SATURN_DISTANCE_FROM_THE_SUN,
 			SATURN_DISTANCE_FROM_THE_SUN * glm::sin(glm::radians(SATURN_INCLINATION)),
 			0,
+			SATURN_RADIUS,
 			SATURN_ROTATION,
 			SATURN_AXIAL_TILT
 		)
 	);
 
-	saturn->Start(SATURN_RADIUS, 36, 36);
+	saturn->Start(36, 36);
 	AddPlanet(saturn);
 
 	std::shared_ptr<Planet> uranus(
@@ -129,12 +136,13 @@ void SolarSystem::Start() {
 			URANUS_DISTANCE_FROM_THE_SUN,
 			URANUS_DISTANCE_FROM_THE_SUN * glm::sin(glm::radians(URANUS_INCLINATION)),
 			0,
+			URANUS_RADIUS,
 			URANUS_ROTATION,
 			URANUS_AXIAL_TILT
 		)
 	);
 
-	uranus->Start(URANUS_RADIUS, 36, 36);
+	uranus->Start(36, 36);
 	AddPlanet(uranus);
 
 	std::shared_ptr<Planet> neptune(
@@ -142,12 +150,13 @@ void SolarSystem::Start() {
 			NEPTUNE_DISTANCE_FROM_THE_SUN,
 			NEPTUNE_DISTANCE_FROM_THE_SUN * glm::sin(glm::radians(NEPTUNE_INCLINATION)),
 			0,
+			NEPTUNE_RADIUS,
 			NEPTUNE_ROTATION,
 			NEPTUNE_AXIAL_TILT
 		)
 	);
 
-	neptune->Start(NEPTUNE_RADIUS, 36, 36);
+	neptune->Start(36, 36);
 	AddPlanet(neptune);
 }
 
