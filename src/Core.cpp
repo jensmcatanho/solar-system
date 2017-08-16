@@ -71,7 +71,7 @@ void Core::Run() {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 projection_matrix = glm::perspective(static_cast<double>(glm::radians(m_Camera->m_Zoom)), static_cast<double>(m_Window->m_AspectRatio), 0.0001, 10000.0);
-		glm::mat4 view_matrix = m_Camera->GetViewMatrix();;
+		glm::mat4 view_matrix = m_Camera->ViewMatrix();;
 
 		m_SolarSystem->Draw(projection_matrix * view_matrix);
 

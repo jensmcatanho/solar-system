@@ -27,64 +27,134 @@ SOFTWARE.
 #define CAMERA_H
 
 #include "Prerequisites.h"
-
-enum Movement {
-	FORWARD,
-	BACKWARD,
-	LEFT,
-	RIGHT
-};
-
-const GLfloat YAW = -90.0f;
-const GLfloat PITCH = 0.0f;
-const GLfloat SPEED = 5.0f;
-const GLfloat SENSITIVITY = 0.1f;
-const GLfloat ZOOM = 45.0f;
+#include "Core.h"
 
 class Camera {
 	public:
+		/**
+		 * Standard constructor.
+		 * @param position Camera's location in world coordinates.
+		 */
 		Camera(glm::vec3 position);
 
+		/**
+		* Standard constructor.
+		* @param position Camera's location in world coordinates.
+		*/
 		Camera(GLfloat x, GLfloat y, GLfloat z);
 
-		void ProcessKeyboard(Movement direction, GLfloat delta_time);
+		/**
+		 * Processes the camera's movement.
+		 * @param direction Moving direction.
+		 * @param delta_time Time in seconds it took to complete the last frame.
+		 */
+		void ProcessMovement(Movement direction, GLfloat delta_time);
 
-		void ProcessMouseMovement(GLfloat x_offset, GLfloat y_offset);
+		/**
+		 * Processes the camera's rotation.
+		 * @param x_offset Horizontal offset.
+		 * @param y_offset Vertical offset.
+		 */
+		void ProcessRotation(GLfloat x_offset, GLfloat y_offset);
 
-		void ProcessMouseScroll(GLfloat y_offset);
+		/**
+		 * Processes the camera's zoom.
+		 * @param y_offset 
+		 */
+		void ProcessZoom(GLfloat y_offset);
 
-		void ProcessSpeed();
-
-		glm::mat4 GetViewMatrix() const;
-
+		/**
+		 * Set the camera's position in world coordinates.
+		 * @param position Target position.
+		 */
 		void SetPosition(glm::vec3 position);
 
+		/**
+		 * Set the direction the camera is looking at.
+		 * @param target Target direction.
+		 */
+		void LookAt(glm::vec3 target);
+
+		/**
+		 * Computes the corresponding view matrix.
+		 * @return The view matrix.
+		 */
+		glm::mat4 ViewMatrix() const;
+
+		/**
+		 * Computes the corresponding projection matrix.
+		 * @return The projection matrix.
+		 */
+		glm::mat4 ProjectionMatrix() const;
+
+		/**
+		 *
+		 */
 		GLfloat m_Zoom;
 
 	private:
+		/**
+		 *
+		 */
 		void UpdateVectors();
+		
+		/**
+		 *
+		 */
+		void ProcessSpeed();
 
+		/**
+		 * Location in world coordinates.
+		 */
 		glm::vec3 m_Position;
 
-		glm::vec3 m_Front;
+		/**
+		 *
+		 */
+		glm::vec3 m_U;
 
-		glm::vec3 m_Up;
+		/**
+		 *
+		 */
+		glm::vec3 m_V;
 
-		glm::vec3 m_Right;
+		/**
+		 *
+		 */
+		glm::vec3 m_W;
 
+		/**
+		 *
+		 */
 		glm::vec3 m_WorldUp;
 
+		/**
+		 * Yaw angle.
+		 */
 		GLfloat m_Yaw;
 
+		/**
+		 * Pitch angle.
+		 */
 		GLfloat m_Pitch;
 
+		/**
+		 * Camera's movement speed.
+		 */
 		GLfloat m_MovementSpeed;
 
+		/**
+		 * Mouse sensitivity.
+		 */
 		GLfloat m_Sensitivity;
 };
 
-inline glm::mat4 Camera::GetViewMatrix() const {
-	return glm::lookAt(m_Position, m_Position + m_Front, m_Up);
+inline glm::mat4 Camera::ViewMatrix() const {
+	return glm::lookAt(m_Position, m_Position - m_W, m_V);
+}
+
+inline glm::mat4 Camera::ProjectionMatrix() const {
+	return glm::perspective(static_cast<double>(glm::radians(m_Zoom)), static_cast<double>(Core::GetSingleton().GetWindow()->m_AspectRatio), 0.0001, 10000.0);
 }
 
 inline void Camera::SetPosition(glm::vec3 position) {

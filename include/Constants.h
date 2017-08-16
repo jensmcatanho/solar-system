@@ -37,6 +37,22 @@ const GLdouble TWO_PI = 2 * glm::pi<float>();
 const GLdouble INV_PI = 1 / glm::pi<float>();
 
 /**
+ * Camera's default values.
+ */
+enum Movement {
+	FORWARD,
+	BACKWARD,
+	LEFT,
+	RIGHT
+};
+
+const GLfloat YAW = -90.0f;
+const GLfloat PITCH = 0.0f;
+const GLfloat SPEED = 5.0f;
+const GLfloat SENSITIVITY = 0.1f;
+const GLfloat ZOOM = 45.0f;
+
+/**
  * Celestial bodies properties.
  * - Radius' and distances from the sun are scaled for better visualization.
  * - Distances from the sun consider the planet at the perihelion.

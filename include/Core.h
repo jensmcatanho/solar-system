@@ -27,7 +27,6 @@ SOFTWARE.
 #define CORE_H
 
 #include "Prerequisites.h"
-#include "Camera.h"
 #include "Planet.h"
 #include "Singleton.h"
 #include "SolarSystem.h"
@@ -48,18 +47,20 @@ class Core : public Singleton<Core> {
 
 		std::shared_ptr<Planet> GetPlanet(unsigned int id) const;
 
+		std::shared_ptr<Window> GetWindow() const;
+
 		static Core &GetSingleton();
 
 		static Core *GetSingletonPtr();
 
-		std::unique_ptr<Camera> m_Camera;
+		std::shared_ptr<Camera> m_Camera;
 
 		GLfloat m_DeltaTime;
 
 	private:
-		std::unique_ptr<Window> m_Window;
+		std::shared_ptr<Window> m_Window;
 
-		std::unique_ptr<SolarSystem> m_SolarSystem;
+		std::shared_ptr<SolarSystem> m_SolarSystem;
 };
 
 inline std::shared_ptr<Star> Core::GetStar() const {
@@ -68,6 +69,10 @@ inline std::shared_ptr<Star> Core::GetStar() const {
 
 inline std::shared_ptr<Planet> Core::GetPlanet(unsigned int id) const {
 	return m_SolarSystem->GetPlanet(id);
+}
+
+inline std::shared_ptr<Window> Core::GetWindow() const {
+	return m_Window;
 }
 
 #endif

@@ -95,19 +95,19 @@ void process_input(GLFWwindow *window) {
 
 	// W - Move forward
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		Core::GetSingleton().m_Camera->ProcessKeyboard(FORWARD, delta_time);
+		Core::GetSingleton().m_Camera->ProcessMovement(FORWARD, delta_time);
 
 	// S - Move backward
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		Core::GetSingleton().m_Camera->ProcessKeyboard(BACKWARD, delta_time);
+		Core::GetSingleton().m_Camera->ProcessMovement(BACKWARD, delta_time);
 
 	// A - Move left
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		Core::GetSingleton().m_Camera->ProcessKeyboard(LEFT, delta_time);
+		Core::GetSingleton().m_Camera->ProcessMovement(LEFT, delta_time);
 
 	// D - Move right
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		Core::GetSingleton().m_Camera->ProcessKeyboard(RIGHT, delta_time);
+		Core::GetSingleton().m_Camera->ProcessMovement(RIGHT, delta_time);
 
 	// 1 - Focus Sun
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
@@ -199,9 +199,9 @@ void mouse_callback(GLFWwindow *window, double xpos, double ypos) {
 	lastX = xpos;
 	lastY = ypos;
 
-	Core::GetSingleton().m_Camera->ProcessMouseMovement(xoffset, yoffset);
+	Core::GetSingleton().m_Camera->ProcessRotation(xoffset, yoffset);
 }
 
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-	Core::GetSingleton().m_Camera->ProcessMouseScroll(yoffset);
+	Core::GetSingleton().m_Camera->ProcessZoom(yoffset);
 }

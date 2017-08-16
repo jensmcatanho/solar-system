@@ -24,7 +24,6 @@ SOFTWARE.
 -----------------------------------------------------------------------------
 */
 #include "Camera.h"
-#include "Core.h"
 
 Camera::Camera(glm::vec3 position) :
 	m_Position(position),
@@ -50,21 +49,21 @@ Camera::Camera(GLfloat x, GLfloat y, GLfloat z) :
 	UpdateVectors();
 }
 
-void Camera::ProcessKeyboard(Movement direction, GLfloat delta_time) {
+void Camera::ProcessMovement(Movement direction, GLfloat delta_time) {
 	ProcessSpeed();
 	GLfloat velocity = m_MovementSpeed * delta_time;
 
 	if (direction == FORWARD)
-		m_Position += m_Front * velocity;
+		m_Position -= m_W * velocity;
 	else if (direction == BACKWARD)
-		m_Position -= m_Front * velocity;
+		m_Position += m_W * velocity;
 	else if (direction == LEFT)
-		m_Position -= m_Right * velocity;
+		m_Position -= m_U * velocity;
 	else
-		m_Position += m_Right * velocity;
+		m_Position += m_U * velocity;
 }
 
-void Camera::ProcessMouseMovement(GLfloat x_offset, GLfloat y_offset) {
+void Camera::ProcessRotation(GLfloat x_offset, GLfloat y_offset) {
 	m_Yaw += x_offset * m_Sensitivity;
 	m_Pitch += y_offset * m_Sensitivity;
 
@@ -76,7 +75,7 @@ void Camera::ProcessMouseMovement(GLfloat x_offset, GLfloat y_offset) {
 	UpdateVectors();
 }
 
-void Camera::ProcessMouseScroll(GLfloat y_offset) {
+void Camera::ProcessZoom(GLfloat y_offset) {
 	if (m_Zoom >= 1.0f && m_Zoom <= 45.0f)
 		m_Zoom -= y_offset;
 
@@ -99,12 +98,12 @@ void Camera::ProcessSpeed() {
 }
 
 void Camera::UpdateVectors() {
-	glm::vec3 front;
-	front.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
-	front.y = sin(glm::radians(m_Pitch));
-	front.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+	glm::vec3 look_at;
+	look_at.x = cos(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
+	look_at.y = sin(glm::radians(m_Pitch));
+	look_at.z = sin(glm::radians(m_Yaw)) * cos(glm::radians(m_Pitch));
 
-	m_Front = glm::normalize(front);
-	m_Right = glm::normalize(glm::cross(m_Front, m_WorldUp));
-	m_Up = glm::normalize(glm::cross(m_Right, m_Front));
+	m_W = -glm::normalize(look_at);
+	m_U = glm::normalize(glm::cross(m_WorldUp, m_W));
+	m_V = glm::cross(m_W, m_U);
 }
