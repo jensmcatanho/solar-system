@@ -27,10 +27,8 @@ SOFTWARE.
 #define CORE_H
 
 #include "Prerequisites.h"
-#include "Planet.h"
 #include "Singleton.h"
 #include "SolarSystem.h"
-#include "Star.h"
 #include "Window.h"
 
 class Core : public Singleton<Core> {

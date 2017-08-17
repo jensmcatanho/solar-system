@@ -88,6 +88,12 @@ class Camera {
 		glm::mat4 ProjectionMatrix() const;
 
 		/**
+		 * 
+		 * @return 
+		 */
+		glm::vec3 GetPosition() const;
+
+		/**
 		 *
 		 */
 		GLfloat m_Zoom;
@@ -155,6 +161,10 @@ inline glm::mat4 Camera::ViewMatrix() const {
 
 inline glm::mat4 Camera::ProjectionMatrix() const {
 	return glm::perspective(static_cast<double>(glm::radians(m_Zoom)), static_cast<double>(Core::GetSingleton().GetWindow()->m_AspectRatio), 0.0001, 10000.0);
+}
+
+inline glm::vec3 Camera::GetPosition() const {
+	return m_Position;
 }
 
 inline void Camera::SetPosition(glm::vec3 position) {

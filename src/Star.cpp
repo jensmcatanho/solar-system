@@ -35,7 +35,12 @@ Star::Star(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLfloat rotation_per
 void Star::Draw(glm::mat4 vp_matrix) {
 	glBindVertexArray(m_VAOHandler);
 	glUseProgram(m_ShaderProgram);
-	glBindTexture(GL_TEXTURE_2D, m_TextureHandler);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_DiffuseMap);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_SpecularMap);
 
 	glm::mat4 model;
 	model = glm::translate(model, m_Position);
@@ -43,7 +48,14 @@ void Star::Draw(glm::mat4 vp_matrix) {
 	model = glm::rotate(model, glm::radians(45.0f) * (float)glfwGetTime(), glm::vec3(0.0, 1.0, 0.0));
 	model = glm::scale(model, glm::vec3(m_Radius, m_Radius, m_Radius));
 	glm::mat4 mvp_matrix = vp_matrix * model;
-	glUniformMatrix4fv(m_MVPLocation, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
+
+	// Vertex Shader
+	glUniformMatrix4fv(3, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(4, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
+
+	// Fragment Shader
+	glUniform1i(5, 0);
+	glUniform1i(6, 1);
 
 	glDrawElements(GL_QUADS, m_Indices.size(), GL_UNSIGNED_SHORT, (void *)0);
 }

@@ -35,7 +35,8 @@ Sphere::Sphere(GLfloat x, GLfloat y, GLfloat z, GLfloat radius) :
 
 Sphere::~Sphere() {
 	glDeleteProgram(m_ShaderProgram);
-	glDeleteTextures(1, &m_TextureHandler);
+	glDeleteTextures(1, &m_DiffuseMap);
+	glDeleteTextures(1, &m_SpecularMap);
 	glDeleteVertexArrays(1, &m_VAOHandler);
 }
 
@@ -82,7 +83,7 @@ void Sphere::Start(unsigned int rings, unsigned int sectors) {
 	}
 }
 
-void Sphere::Load(const GLchar *texture_path) {
+void Sphere::Load(const GLchar *vertex, const GLchar *frag, const GLchar *diffuse_map, const GLchar *specular_map) {
 	GLuint vbo;
 	GLuint ebo;
 
@@ -106,8 +107,10 @@ void Sphere::Load(const GLchar *texture_path) {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_Indices.size() * sizeof(GLushort), &m_Indices.front(), GL_STATIC_DRAW);
 
-	LoadShaders();
-	LoadTexture(texture_path);
+	LoadShaders(vertex, frag);
+	
+	m_DiffuseMap = LoadTexture(diffuse_map);
+	m_SpecularMap = LoadTexture(specular_map);
 
 	glBindVertexArray(0);
 	glDeleteBuffers(1, &vbo);
@@ -117,10 +120,10 @@ void Sphere::Load(const GLchar *texture_path) {
 	m_Data.shrink_to_fit();
 }
 
-void Sphere::LoadShaders() {
+void Sphere::LoadShaders(const GLchar *vertex, const GLchar *frag) {
 	GLint status;
 
-	std::string vertex_source = Core::ReadFile("resources/vertex.glsl").str();
+	std::string vertex_source = Core::ReadFile(vertex).str();
 	const GLchar *vertex_code = const_cast<const GLchar *>(vertex_source.c_str());
 
 	GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
@@ -138,7 +141,7 @@ void Sphere::LoadShaders() {
 		return;
 	}
 
-	std::string fragment_source = Core::ReadFile("resources/fragment.glsl").str();
+	std::string fragment_source = Core::ReadFile(frag).str();
 	const GLchar *fragment_code = const_cast<const GLchar *>(fragment_source.c_str());
 
 	GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
@@ -160,9 +163,9 @@ void Sphere::LoadShaders() {
 	glAttachShader(m_ShaderProgram, vertex_shader);
 	glAttachShader(m_ShaderProgram, fragment_shader);
 
-	glBindAttribLocation(m_ShaderProgram, 0, "in_Position");
-	glBindAttribLocation(m_ShaderProgram, 1, "in_Normal");
-	glBindAttribLocation(m_ShaderProgram, 2, "in_TexCoord");
+	glBindAttribLocation(m_ShaderProgram, 0, "a_Position");
+	glBindAttribLocation(m_ShaderProgram, 1, "a_Normal");
+	glBindAttribLocation(m_ShaderProgram, 2, "a_TexCoord");
 
 	glLinkProgram(m_ShaderProgram);
 	glGetProgramiv(m_ShaderProgram, GL_LINK_STATUS, &status);
@@ -177,8 +180,6 @@ void Sphere::LoadShaders() {
 		return;
 	}
 
-	m_MVPLocation = glGetUniformLocation(m_ShaderProgram, "un_mvpMatrix");
-
 	glDetachShader(m_ShaderProgram, vertex_shader);
 	glDeleteShader(vertex_shader);
 
@@ -186,24 +187,26 @@ void Sphere::LoadShaders() {
 	glDeleteShader(fragment_shader);
 }
 
-void Sphere::LoadTexture(const GLchar *texture_path) {
-	glGenTextures(1, &m_TextureHandler);
-	glBindTexture(GL_TEXTURE_2D, m_TextureHandler);
+GLuint Sphere::LoadTexture(const GLchar *texture_path) {
+	GLint width;
+	GLint height;
+	GLint num_channels;
 
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-	int width;
-	int height;
-	int num_channels;
+	GLuint texture_handler;
 
 	stbi_set_flip_vertically_on_load(true);
 
 	unsigned char *data = stbi_load(texture_path, &width, &height, &num_channels, 0);
 
 	if (data) {
+		glGenTextures(1, &texture_handler);
+		glBindTexture(GL_TEXTURE_2D, texture_handler);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	
@@ -212,4 +215,6 @@ void Sphere::LoadTexture(const GLchar *texture_path) {
 	}
 
 	stbi_image_free(data);
+
+	return texture_handler;
 }

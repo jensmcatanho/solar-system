@@ -161,16 +161,63 @@ void SolarSystem::Start() {
 }
 
 void SolarSystem::Load() {
-	m_Star->Load("resources/textures/sun.jpg");
+	m_Star->Load("resources/shaders/sun.vert", "resources/shaders/sun.frag", "resources/textures/sun_diffuse_map.jpg", "resources/textures/sun_specular_map.jpg");
 
-	m_Planets[0]->Load("resources/textures/mercury.jpg");
-	m_Planets[1]->Load("resources/textures/venus.jpg");
-	m_Planets[2]->Load("resources/textures/earth.jpg");
-	m_Planets[3]->Load("resources/textures/mars.jpg");
-	m_Planets[4]->Load("resources/textures/jupiter.jpg");
-	m_Planets[5]->Load("resources/textures/saturn.jpg");
-	m_Planets[6]->Load("resources/textures/uranus.jpg");
-	m_Planets[7]->Load("resources/textures/neptune.jpg");
+	m_Planets[0]->Load(
+		"resources/shaders/planet.vert",
+		"resources/shaders/planet.frag",
+		"resources/textures/mercury_diffuse_map.jpg",
+		"resources/textures/mercury_specular_map.jpg"
+	);
+
+	m_Planets[1]->Load(
+		"resources/shaders/planet.vert",
+		"resources/shaders/planet.frag",
+		"resources/textures/venus_diffuse_map.jpg",
+		"resources/textures/venus_specular_map.jpg"
+	);
+
+	m_Planets[2]->Load(
+		"resources/shaders/planet.vert",
+		"resources/shaders/planet.frag",
+		"resources/textures/earth_diffuse_map.jpg",
+		"resources/textures/earth_specular_map.jpg"
+	);
+
+	m_Planets[3]->Load(
+		"resources/shaders/planet.vert",
+		"resources/shaders/planet.frag",
+		"resources/textures/mars_diffuse_map.jpg",
+		"resources/textures/mars_specular_map.jpg"
+	);
+
+	m_Planets[4]->Load(
+		"resources/shaders/planet.vert",
+		"resources/shaders/planet.frag",
+		"resources/textures/jupiter_diffuse_map.jpg",
+		"resources/textures/jupiter_specular_map.jpg"
+	);
+
+	m_Planets[5]->Load(
+		"resources/shaders/planet.vert",
+		"resources/shaders/planet.frag",
+		"resources/textures/saturn_diffuse_map.jpg",
+		"resources/textures/saturn_specular_map.jpg"
+	);
+
+	m_Planets[6]->Load(
+		"resources/shaders/planet.vert",
+		"resources/shaders/planet.frag",
+		"resources/textures/uranus_diffuse_map.jpg",
+		"resources/textures/uranus_specular_map.jpg"
+	);
+
+	m_Planets[7]->Load(
+		"resources/shaders/planet.vert",
+		"resources/shaders/planet.frag",
+		"resources/textures/neptune_diffuse_map.jpg",
+		"resources/textures/neptune_specular_map.jpg"
+	);
 }
 
 void SolarSystem::Draw(glm::mat4 vp_matrix) {

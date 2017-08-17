@@ -24,6 +24,8 @@ SOFTWARE.
 -----------------------------------------------------------------------------
 */
 #include "Planet.h"
+#include "Core.h"
+#include "Camera.h"
 
 Planet::Planet(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLfloat rotation_period, GLfloat axial_tilt) :
 	Sphere(x, y, z, radius),
@@ -35,7 +37,12 @@ Planet::Planet(GLfloat x, GLfloat y, GLfloat z, GLfloat radius, GLfloat rotation
 void Planet::Draw(glm::mat4 vp_matrix) {
 	glBindVertexArray(m_VAOHandler);
 	glUseProgram(m_ShaderProgram);
-	glBindTexture(GL_TEXTURE_2D, m_TextureHandler);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_DiffuseMap);
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, m_SpecularMap);
 
 	glm::mat4 model;
 	model = glm::translate(model, m_Position);
@@ -43,7 +50,20 @@ void Planet::Draw(glm::mat4 vp_matrix) {
 	model = glm::rotate(model, glm::radians(45.0f) * (float)glfwGetTime(), glm::vec3(0.0, 1.0, 0.0));
 	model = glm::scale(model, glm::vec3(m_Radius, m_Radius, m_Radius));
 	glm::mat4 mvp_matrix = vp_matrix * model;
-	glUniformMatrix4fv(m_MVPLocation, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
+
+	// Vertex Shader
+	glUniformMatrix4fv(3, 1, GL_FALSE, glm::value_ptr(model));
+	glUniformMatrix4fv(4, 1, GL_FALSE, glm::value_ptr(mvp_matrix));
+
+	// Fragment Shader
+	glUniform1i(6, 0);
+	glUniform1i(7, 1);
+	glUniform1f(8, 4.0f);
+
+	glUniform3fv(9, 1, glm::value_ptr(glm::vec3(0.0f, 0.0f, 0.0f)));
+	glUniform3fv(10, 1, glm::value_ptr(glm::vec3(0.1f, 0.1f, 0.1f)));
+	glUniform3fv(11, 1, glm::value_ptr(glm::vec3(0.7f, 0.7f, 0.7f)));
+	glUniform3fv(12, 1, glm::value_ptr(glm::vec3(0.5f, 0.5f, 0.5f)));
 
 	glDrawElements(GL_QUADS, m_Indices.size(), GL_UNSIGNED_SHORT, (void *)0);
 }

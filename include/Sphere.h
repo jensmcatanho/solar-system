@@ -36,7 +36,7 @@ class Sphere {
 
 		void Start(unsigned int rings, unsigned int sectors);
 
-		void Load(const GLchar *texture_path);
+		void Load(const GLchar *vertex, const GLchar *frag, const GLchar *diffuse_map, const GLchar *specular_map);
 
 		virtual void Draw(glm::mat4 vp_matrix) = 0;
 
@@ -51,16 +51,14 @@ class Sphere {
 
 		GLuint m_VAOHandler;
 
-		GLuint m_TextureHandler;
+		GLuint m_DiffuseMap;
 
-		unsigned char *m_TextureData;
-
-		GLint m_MVPLocation;
+		GLuint m_SpecularMap;
 
 	private:
-		void LoadShaders();
+		void LoadShaders(const GLchar *vertex, const GLchar *frag);
 
-		void LoadTexture(const GLchar *texture_path);
+		GLuint LoadTexture(const GLchar *texture_path);
 
 		std::vector<GLfloat> m_Data;
 };
